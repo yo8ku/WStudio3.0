@@ -1,0 +1,256 @@
+/**
+ * Styles the Markdown slash-command completion panel using the workbench menu surface.
+ */
+@use '@/assets/styles/variables' as variables;
+
+@mixin styles {
+  :global(.cm-tooltip-autocomplete.cm-editor-slash-command-completion) {
+    --workbench-scrollbar-hit-width: #{variables.$scrollbar-hit-width};
+    --workbench-scrollbar-thumb-width: #{variables.$scrollbar-thumb-width};
+    --workbench-scrollbar-thumb-min-height: #{variables.$scrollbar-thumb-min-height};
+    --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+    --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+    --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+    min-width: 16rem;
+    max-width: 28rem;
+    padding: variables.$spacing-2xs;
+    overflow: hidden;
+    border: variables.$editor-block-border-width solid var(--ws-editor-completion-border, var(--ws-border));
+    border-radius: variables.$radius-xs;
+    color: var(--ws-editor-completion-foreground, var(--ws-foreground));
+    background: var(--ws-editor-completion-background, var(--ws-menu-background));
+  }
+
+  :global(.cm-editor-slash-command-completion__search) {
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    padding: variables.$spacing-2xs 0  variables.$spacing-xs 0;
+  }
+
+  :global(.cm-editor-slash-command-completion__search-icon) {
+    flex: 0 0 auto;
+    width: 1em;
+    height: 1em;
+    color: currentColor;
+    font-family: 'Untitled';
+    font-size: 1em;
+    line-height: 1;
+    opacity: 0.75;
+  }
+
+  :global(.cm-editor-slash-command-completion__search-icon::before) {
+    content: '\f0a4';
+  }
+
+  :global(.cm-editor-slash-command-completion__search-input) {
+    min-width: 0;
+    flex: 1 1 auto;
+    border: 0;
+    outline: 0;
+    color: inherit;
+    line-height: inherit;
+  }
+
+  :global(.cm-editor-slash-command-completion > ul[role='listbox']) {
+    width: min(20rem, calc(100vw - #{variables.$spacing-md * 2})) !important;
+    min-width: min(20rem, calc(100vw - #{variables.$spacing-md * 2})) !important;
+    max-width: min(28rem, calc(100vw - #{variables.$spacing-md * 2})) !important;
+    height: min(300px, calc(100vh - #{variables.$spacing-md * 2})) !important;
+    max-height: 300px !important;
+    font-family: variables.$font-family-base !important;
+    // Reserve space for both the scrollbar hit area and its wider visual thumb.
+    padding-right: calc(
+      var(--workbench-scrollbar-hit-width) +
+      var(--workbench-scrollbar-thumb-width)
+    );
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overflow-anchor: none;
+    scroll-behavior: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  :global(.cm-editor-slash-command-completion > ul[role='listbox'] > completion-section) {
+    padding: variables.$spacing-xs variables.$spacing-xs !important;
+    border-bottom: 0 !important;
+  }
+
+  // Render separators as standalone elements before every group after the first.
+  :global(.cm-editor-slash-command-completion > ul[role='listbox'] > completion-section:not(:first-child)::before) {
+    content: '';
+    display: block;
+    margin: 0 0 variables.$spacing-sm;
+    border-top: variables.$editor-block-border-width solid var(--ws-editor-completion-border, var(--ws-border));
+  }
+
+  :global(.cm-editor-slash-command-completion > ul[role='listbox']::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+    display: none !important;
+  }
+
+  :global(.cm-editor-slash-command-completion__scrollbar) {
+    position: absolute;
+    top: calc(2.75rem + #{variables.$spacing-2xs});
+    right: variables.$spacing-2xs;
+    bottom: variables.$spacing-2xs;
+    width: var(--workbench-scrollbar-hit-width);
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-slash-command-completion__scrollbar .scrollbar-vertical) {
+    display: block !important;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-slash-command-completion ul[role='listbox'] > li[role='option']) {
+    display: flex;
+    min-height: variables.$editor-context-menu-item-height;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: variables.$spacing-xs;
+    padding-right: calc(
+      var(--workbench-scrollbar-hit-width) +
+      var(--workbench-scrollbar-thumb-width) +
+      #{variables.$spacing-2xs}
+    );
+    border-radius: variables.$radius-2px;
+    font-size: 0.8rem;
+    line-height: variables.$editor-context-menu-item-height;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionLabel) {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionDetail) {
+    flex: 0 0 auto;
+    margin-left: auto;
+    text-align: right;
+    color: var(--ws-editor-completion-detailForeground, var(--ws-descriptionForeground));
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-swatch) {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: variables.$spacing-xs;
+    border: 1px solid currentColor;
+    border-radius: variables.$radius-2px;
+    box-sizing: border-box;
+    opacity: 1;
+    line-height: 1.25em;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-swatch::after) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '\f08e';
+    font-family: 'Untitled';
+    font-size: 1em;
+    line-height: 1.25;
+    color: currentColor;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-default) { color: var(--ws-foreground); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-gray) { color: #aaaaaa; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-brown) { color: #a36b3d; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-orange) { color: #F87D01; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-yellow) { color: #e7bd12; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-green) { color: #039E03; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-blue) { color: #2786e6; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-purple) { color: #a844ff; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-pink) { color: #f06fbc; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-color-red) { color: #DE0808; }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-basic-icon),
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-special-icon) {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: variables.$spacing-xs;
+    padding: 0;
+    color: currentColor;
+    font-family: 'Untitled';
+    font-size: 1em;
+    line-height: 1.25;
+    opacity: 0.85;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-text-icon::before) { content: '\f08d'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-unordered-list-icon::before) { content: '\f029'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-ordered-list-icon::before) { content: '\f028'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-todo-list-icon::before) { content: '\f027'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-quote-icon::before) { content: '\f003'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-ai-chat-icon::before) { content: '\f079'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-divider-icon::before) { content: '\f021'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-admonition-icon::before) { content: '\f00b'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-table-icon::before) { content: '\f093'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-footnote-icon::before) { content: '\f02f'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-image-icon::before) { content: '\f031'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-video-icon::before) { content: '\f085'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-audio-icon::before) { content: '\f072'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-code-icon::before) { content: '\f051'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-file-icon::before) { content: '\f047'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-bookmark-icon::before) { content: '\f070'; }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-heading-icon) {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: variables.$spacing-xs;
+    padding: 0;
+    color: currentColor;
+    font-family: 'Untitled';
+    font-size: 1rem;
+    line-height: 1.25;
+    opacity: 0.85;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-heading-1::before) { content: '\f039'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-heading-2::before) { content: '\f038'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-heading-3::before) { content: '\f037'; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-heading-4::before) { content: '\f036'; }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-swatch) {
+    width: 1.6em;
+    height: 1.6em;
+    margin-right: variables.$spacing-xs;
+    padding: 0;
+    border: 1px solid var(--ws-border);
+    border-radius: variables.$radius-xs;
+    box-sizing: border-box;
+    opacity: 1;
+  }
+
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-default) { background: transparent; }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-gray) { background: rgb(170 170 170 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-brown) { background: rgb(163 107 61 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-orange) { background: rgb(248 125 1 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-yellow) { background: rgb(231 189 18 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-green) { background: rgb(3 160 3 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-blue) { background: rgb(39 134 230 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-purple) { background: rgb(168 68 255 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-pink) { background: rgb(240 111 188 / 0.28); }
+  :global(.cm-editor-slash-command-completion .cm-completionIcon-background-red) { background: rgb(223 3 3 / 0.28); }
+
+  :global(.cm-editor-slash-command-completion ul[role='listbox'] > li[role='option']:hover),
+  :global(.cm-editor-slash-command-completion ul[role='listbox'] > li[role='option'][aria-selected='true']) {
+    color: var(--ws-editor-completion-hoverForeground, var(--ws-foreground)) !important;
+    background: var(--ws-editor-completion-hoverBackground, var(--ws-menu-hoverBackground)) !important;
+  }
+
+  :global(.cm-editor-slash-command-completion ul[role='listbox'] > li[role='option']:hover .cm-completionDetail),
+  :global(.cm-editor-slash-command-completion ul[role='listbox'] > li[role='option'][aria-selected='true'] .cm-completionDetail) {
+    color: inherit;
+  }
+}

@@ -1,0 +1,90 @@
+// 文件说明：定义全局基础图标按钮的统一交互状态。
+@use '@/assets/styles/variables' as *;
+
+.v-btn.ws-icon-button {
+  border-radius: $radius-xs;
+  height: $button-height;
+  min-height: $button-height;
+  color:var(--ws-button-foreground);
+}
+
+.v-btn.v-btn--icon.ws-icon-button {
+  width: $button-width;
+  min-width: $button-width;
+  padding-inline: 0;
+}
+
+.v-btn.ws-icon-button--with-text {
+  width: auto;
+  min-width: 0;
+  padding-inline: $spacing-xs;
+}
+
+.ws-icon-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $font-size-lg;
+  height: $font-size-lg;
+  font-size: $font-size-lg;
+  line-height: 1;
+}
+
+// The global iconfont base class sets inline-block; the button container owns alignment.
+.ws-icon-button__icon.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ws-icon-button__icon--url {
+  background-color: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.ws-icon-button--with-text .v-btn__content {
+  gap: $spacing-2xs;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ws-icon-button--icon-start .ws-icon-button__icon {
+  order: -1;
+}
+
+.ws-icon-button__text {
+  display: block;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.v-btn.ws-icon-button > .v-btn__overlay {
+  background-color: transparent !important;
+  opacity: 0 !important;
+}
+
+.ws-icon-button:hover {
+  background-color: var(--ws-button-hoverBackground);
+}
+
+.v-btn.ws-icon-button:active,
+.v-btn.ws-icon-button.v-btn--active,
+.v-btn.ws-icon-button.ws-icon-button--active,
+.v-btn.ws-icon-button[aria-pressed='true'],
+.v-btn.ws-icon-button[aria-pressed='true']:hover,
+.v-btn.ws-icon-button[aria-expanded='true'],
+.v-btn.ws-icon-button[aria-expanded='true']:hover {
+  background-color: var(--ws-button-activeBackground, var(--ws-button-hoverBackground));
+  color: var(--ws-button-activeForeground, var(--ws-button-hoverForeground, var(--ws-button-foreground)));
+}
+
+.ws-icon-button:disabled {
+  color: var(--ws-button-disabledForeground);
+  background-color: transparent;
+  cursor: default;
+}

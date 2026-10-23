@@ -1,0 +1,154 @@
+// 文件说明：定义宿主选择框、字体箭头与下拉选项的统一样式。
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/mixins' as *;
+
+.ws-select {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: $select-trigger-height;
+  color: var(--ws-select-foreground);
+  font-size: $select-trigger-font-size;
+  line-height: normal;
+}
+
+
+.ws-select__trigger {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: $select-trigger-height;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2xs;
+  padding: 0 $select-trigger-padding-inline;
+  border: 1px solid var(--ws-select-border);
+  border-radius: $select-surface-radius;
+  outline: none;
+  background: var(--ws-select-background);
+  font: inherit;
+  line-height: normal;
+  text-align: start;
+  cursor: pointer;
+}
+
+.ws-select__trigger:hover,
+.ws-select__trigger:focus-visible,
+.ws-select--open .ws-select__trigger {
+  border-color: var(--ws-select-border, var(--ws-border, transparent));
+}
+
+.ws-select--open .ws-select__trigger {
+  border-radius: $select-surface-radius $select-surface-radius 0 0;
+}
+
+.ws-select__trigger:disabled {
+  opacity: $select-disabled-opacity;
+  cursor: default;
+}
+
+.ws-select__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-select__arrow.icon {
+  @include flex-center;
+  flex: 0 0 $select-trigger-arrow-size;
+  width: $select-trigger-arrow-size;
+  height: $select-trigger-arrow-size;
+  font-size: $select-trigger-arrow-size;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ws-select-dropdown {
+  --workbench-scrollbar-hit-width: #{$select-scrollbar-width};
+  --workbench-scrollbar-thumb-width: #{$select-scrollbar-width};
+  --workbench-scrollbar-thumb-min-height: #{$select-scrollbar-thumb-min-height};
+  --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+  --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+  --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+  position: fixed;
+  z-index: $select-menu-active-z-index;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  box-sizing: border-box;
+  height: auto;
+  max-height: calc(100vh - #{$spacing-xs});
+  overflow: hidden;
+  border: 1px solid var(--ws-select-border, var(--ws-border, transparent));
+  border-top: 0;
+  border-radius: 0 0 $select-surface-radius $select-surface-radius;
+  outline: none;
+  padding: $select-menu-padding-block;
+  color: var(--ws-select-foreground, var(--ws-input-foreground));
+  background: var(--ws-select-background);
+  box-shadow: var(--ws-select-shadow, 0 0.25rem 0.75rem rgb(0 0 0 / 0.18));
+  font-size: $select-font-size;
+  line-height: normal;
+  pointer-events: auto;
+}
+
+.ws-select__scroller {
+  flex: 0 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ws-select__scroller::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.ws-select__scrollbar {
+  z-index: 2;
+}
+
+.ws-select__option {
+  display: flex;
+  width: 100%;
+  min-height: $select-menu-item-height;
+  align-items: center;
+  padding: $select-menu-item-padding-block $select-menu-item-padding-inline;
+  border: 0;
+  border-radius: $select-item-radius;
+  outline: none;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  text-align: start;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.ws-select__empty {
+  min-width: 100%;
+  min-height: 3rem;
+  padding: $select-menu-item-padding-block $select-menu-item-padding-inline;
+  color: var(--ws-descriptionForeground);
+  line-height: normal;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ws-select__option:hover,
+.ws-select__option:focus-visible,
+.ws-select__option--active,
+.ws-select__option--selected {
+  background: var(--ws-select-hoverBackground, var(--ws-list-hoverBackground));
+}
+
+

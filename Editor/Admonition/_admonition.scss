@@ -1,0 +1,194 @@
+/**
+ * 文件说明：定义 Markdown 标注块的头部、内容区域和编辑器内交互样式。
+ */
+@use '@/assets/styles/variables' as variables;
+@use '@/assets/styles/mixins' as mixins;
+
+@mixin styles {
+:deep(.cm-editor-admonition-widget) {
+  box-sizing: border-box;
+  width: 100%;
+  padding-block: variables.$editor-block-gap;
+}
+
+:deep(.cm-editor-admonition) {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border: variables.$editor-admonition-border-width solid var(--ws-border);
+  border-radius: variables.$radius-xs;
+  background: var(--ws-markdown-admonitionNoteBackground);
+  color: var(--ws-foreground);
+  cursor: text;
+  white-space: normal;
+}
+
+:deep(.cm-editor-admonition__header) {
+  @include mixins.flex-align-center;
+  box-sizing: border-box;
+  gap: variables.$spacing-2xs;
+  min-height: variables.$editor-admonition-header-height;
+  padding: variables.$editor-admonition-header-padding-block variables.$editor-admonition-header-padding-inline;
+  color: var(--ws-markdown-admonitionTitleForeground);
+  font-weight: variables.$editor-admonition-title-weight;
+}
+
+:deep(.v-btn.v-btn--icon.ws-icon-button.cm-editor-admonition__source-toggle) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 variables.$editor-block-action-size;
+  width: variables.$editor-block-action-size;
+  min-width: variables.$editor-block-action-size;
+  height: variables.$editor-block-action-size;
+  min-height: variables.$editor-block-action-size;
+  margin-inline-start: auto;
+  padding: 0;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+:deep(.cm-editor-admonition__source-icon) {
+  display: inline-flex;
+  flex: 0 0 variables.$editor-block-action-icon-size;
+  align-items: center;
+  justify-content: center;
+  width: variables.$editor-block-action-icon-size;
+  height: variables.$editor-block-action-icon-size;
+  font-size: variables.$editor-block-action-icon-size;
+  line-height: 1;
+}
+
+:deep(.cm-editor-admonition__source-toggle .v-btn__content) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:deep(.cm-editor-admonition__icon) {
+  display: inline-flex;
+  flex: 0 0 variables.$font-size-md;
+  align-items: center;
+  justify-content: center;
+  width: variables.$font-size-md;
+  height: variables.$font-size-md;
+  line-height: 1;
+  color: var(--ws-markdown-admonitionTitleForeground);
+}
+
+:deep(.cm-editor-admonition__title) {
+  display: inline-flex;
+  align-items: center;
+  min-height: variables.$font-size-md;
+  line-height: variables.$font-size-md;
+  cursor: text;
+  user-select: text;
+  white-space: pre-wrap;
+  min-width: variables.$font-size-md;
+}
+
+:deep(.cm-editor-admonition__title:empty::before) {
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+:deep(.cm-editor-admonition__title:focus),
+:deep(.cm-editor-admonition__content:focus) {
+  outline: none;
+}
+
+:deep(.cm-editor-admonition__source-icon .icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+
+:deep(.cm-editor-admonition__icon svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+:deep(.cm-editor-admonition--tip .cm-editor-admonition__header),
+:deep(.cm-editor-admonition--tip .cm-editor-admonition__icon) {
+  color: var(--ws-markdown-admonitionTipForeground);
+}
+
+:deep(.cm-editor-admonition--tip) {
+  background: var(--ws-markdown-admonitionTipBackground);
+}
+
+:deep(.cm-editor-admonition--important) {
+  background: var(--ws-markdown-admonitionImportantBackground);
+}
+
+:deep(.cm-editor-admonition--warning) {
+  background: var(--ws-markdown-admonitionWarningBackground);
+}
+
+:deep(.cm-editor-admonition--caution) {
+  background: var(--ws-markdown-admonitionCautionBackground);
+}
+
+:deep(.cm-editor-admonition--important .cm-editor-admonition__header),
+:deep(.cm-editor-admonition--important .cm-editor-admonition__icon) {
+  color: var(--ws-markdown-admonitionImportantForeground);
+}
+
+:deep(.cm-editor-admonition--warning .cm-editor-admonition__header),
+:deep(.cm-editor-admonition--warning .cm-editor-admonition__icon) {
+  color: var(--ws-markdown-admonitionWarningForeground);
+}
+
+:deep(.cm-editor-admonition--caution .cm-editor-admonition__header),
+:deep(.cm-editor-admonition--caution .cm-editor-admonition__icon) {
+  color: var(--ws-markdown-admonitionCautionForeground);
+}
+
+:deep(.cm-editor-admonition__content) {
+  padding: variables.$spacing-xs variables.$spacing-md variables.$spacing-sm;
+  line-height: variables.$editor-line-height-size;
+  cursor: text;
+  user-select: text;
+  white-space: pre-wrap;
+}
+
+// 内嵌正文保留卡片字体和行间距，由 CodeMirror 统一绘制每一行的光标。
+:deep(.cm-editor-admonition__content .cm-editor) {
+  height: auto;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+
+:deep(.cm-editor-admonition__content .cm-editor.cm-focused) {
+  outline: none;
+}
+
+:deep(.cm-editor-admonition__content .cm-scroller) {
+  overflow: visible;
+  font: inherit;
+  line-height: inherit;
+}
+
+:deep(.cm-editor-admonition__content .cm-content) {
+  min-height: var(--workbench-editor-line-height);
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  caret-color: transparent !important;
+}
+
+:deep(.cm-editor-admonition__content .cm-line) {
+  padding: 0;
+  line-height: inherit;
+}
+
+:deep(.cm-editor-admonition__content .cm-line)::selection,
+:deep(.cm-editor-admonition__content .cm-line *)::selection {
+  background-color: transparent !important;
+}
+}

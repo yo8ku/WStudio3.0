@@ -1,0 +1,81 @@
+/**
+ * 文件说明：定义全局基础范围滑块的轨道、滑块、焦点和交互状态。
+ */
+@use '@/assets/styles/variables' as *;
+
+.ws-slider {
+  display: block;
+  width: 100%;
+  height: $font-size-lg;
+  margin: 0;
+  padding: $spacing-3xs 0;
+  border: 0;
+  border-radius: $radius-xs;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+.ws-slider:focus-visible {
+  outline: $editor-block-border-width solid var(--ws-focusBorder);
+  outline-offset: $spacing-3xs;
+}
+
+.ws-slider::-webkit-slider-runnable-track {
+  height: $spacing-3xs;
+  border-radius: $radius-xs;
+  background: linear-gradient(
+    to right,
+    var(--ws-slider-background, var(--ws-editor-scrollbarSlider-background)) var(--ws-slider-progress),
+    var(--ws-editor-tableBorder) var(--ws-slider-progress)
+  );
+}
+
+.ws-slider::-webkit-slider-thumb {
+  width: $font-size-md;
+  height: $font-size-md;
+  margin-top: ($spacing-3xs - $font-size-md) * 0.5;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ws-slider-background, var(--ws-editor-scrollbarSlider-background));
+  appearance: none;
+}
+
+.ws-slider:hover::-webkit-slider-thumb {
+  background: var(--ws-slider-hoverBackground, var(--ws-editor-scrollbarSlider-hoverBackground));
+}
+
+.ws-slider:active::-webkit-slider-thumb {
+  background: var(--ws-slider-activeBackground, var(--ws-editor-scrollbarSlider-activeBackground));
+}
+
+.ws-slider::-moz-range-track {
+  height: $spacing-3xs;
+  border: 0;
+  border-radius: $radius-xs;
+  background: var(--ws-editor-tableBorder);
+}
+
+.ws-slider::-moz-range-progress {
+  height: $spacing-3xs;
+  border-radius: $radius-xs;
+  background: var(--ws-slider-background, var(--ws-editor-scrollbarSlider-background));
+}
+
+.ws-slider::-moz-range-thumb {
+  width: $font-size-md;
+  height: $font-size-md;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ws-slider-background, var(--ws-editor-scrollbarSlider-background));
+}
+
+.ws-slider:hover::-moz-range-thumb {
+  background: var(--ws-slider-hoverBackground, var(--ws-editor-scrollbarSlider-hoverBackground));
+}
+
+.ws-slider:active::-moz-range-thumb {
+  background: var(--ws-slider-activeBackground, var(--ws-editor-scrollbarSlider-activeBackground));
+}

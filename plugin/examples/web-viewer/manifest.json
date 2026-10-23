@@ -1,0 +1,26 @@
+{
+  "$schema": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "id": "com.example.web-viewer",
+  "name": "Web Viewer Example",
+  "version": "1.0.0",
+  "description": "A third-party plugin example using the public WebViewerApi.",
+  "author": { "name": "WStudio Example Team" },
+  "license": "MIT",
+  "minAppVersion": "0.1.0",
+  "apiVersion": "1.0",
+  "main": "main.js",
+  "activationEvents": ["onCommand:com.example.web-viewer.open"],
+  "permissions": [
+    { "id": "webViewer.navigate", "reason": "Open an external web page in a workbench tab." }
+  ],
+  "contributes": {
+    "commands": [
+      { "id": "com.example.web-viewer.open", "title": "Open Web Viewer Example" }
+    ],
+    "views": [
+      { "type": "com.example.web-viewer.view", "title": "Web Viewer", "region": "editor", "multiple": true, "capabilities": ["webViewer"] }
+    ],
+    "settings": [],
+    "statusBar": []
+  }
+}

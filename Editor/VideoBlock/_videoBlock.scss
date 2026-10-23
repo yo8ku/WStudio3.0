@@ -1,0 +1,77 @@
+// 文件说明：定义视频块的视频内容、加载错误与编辑按钮样式
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/mixins' as *;
+@use '@editor/Block/editorBlock' as editor-block;
+@use '@editor/MediaBlock/mediaSource' as media-source;
+
+@mixin styles {
+  @include media-source.source-link('cm-editor-video-block');
+
+  :deep(.cm-editor-video-block) {
+    @include editor-block.root;
+    min-width: $editor-video-block-min-width;
+    min-height: $editor-video-block-min-height;
+    padding-top: $editor-media-block-top-padding;
+    padding-bottom: $editor-block-gap;
+    overflow: hidden;
+  }
+
+  :deep(.cm-editor-video-block[data-editor-block-state='selected']::after),
+  :deep(.cm-editor-video-block[data-editor-block-state='editing']::after) {
+    @include editor-block.selection-outline(
+      $editor-media-block-top-padding 0 $editor-block-gap
+    );
+  }
+
+  :deep(.cm-editor-video-block__video) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: $editor-video-block-content-max-height;
+    margin: 0 auto;
+    border-radius: $radius-xs;
+    background: var(--ws-editor-background);
+  }
+
+  :deep(.cm-editor-video-block__actions) {
+    position: absolute;
+    z-index: $editor-block-action-z-index;
+    top: $editor-block-action-offset;
+    right: $editor-block-action-offset;
+  }
+
+  :deep(.cm-editor-video-block__edit) {
+    @include editor-block.action-button;
+  }
+
+  :deep(.cm-editor-video-block__edit:hover) {
+    color: var(--ws-button-hoverForeground);
+  }
+
+  :deep(.cm-editor-video-block__edit:focus-visible) {
+    @include editor-block.action-button-focus;
+  }
+
+  :deep(.cm-editor-video-block__edit-icon) {
+    @include editor-block.action-icon;
+  }
+
+  :deep(.cm-editor-video-block__error) {
+    display: none;
+    min-height: $editor-video-block-min-height;
+    color: var(--ws-descriptionForeground);
+    font-size: $font-size-sm;
+    text-align: center;
+    border-radius: $radius-xs;
+    border: $editor-table-border-width solid var(--ws-blackBorder, var(--ws-border, transparent));
+  }
+
+  :deep(.cm-editor-video-block[data-video-state='error'] .cm-editor-video-block__video) {
+    display: none;
+  }
+
+  :deep(.cm-editor-video-block[data-video-state='error'] .cm-editor-video-block__error) {
+    @include flex-center;
+  }
+}

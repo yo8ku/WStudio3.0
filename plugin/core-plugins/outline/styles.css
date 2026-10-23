@@ -1,0 +1,278 @@
+/* 文件说明：大纲插件的右侧边栏树、活动标题和空态样式。 */
+.plugin-view-panel__content[data-plugin-id="com.wstudio.outline"] {
+    --outline-font-size: 12px;
+    --outline-row-height: 26px;
+    --outline-icon-size: 16px;
+    --outline-indent-size: 12px;
+    --outline-indent-guide-offset: 7px;
+    --outline-indent-guide-width: 1px;
+    --outline-inline-padding: 6px;
+    --outline-panel-padding: 4px;
+    --outline-radius: 3px;
+    --outline-row-radius: 4px;
+    --outline-focus-width: 1px;
+    --outline-motion-duration: 120ms;
+    --outline-toolbar-height: 28px;
+    --outline-toolbar-button-size: 24px;
+    --outline-toolbar-icon-size: 16px;
+    --outline-toolbar-gap: 5px;
+    --outline-disabled-opacity: 0.45;
+    --outline-search-height: 26px;
+    --outline-search-border-width: 1px;
+    --outline-search-padding: 6px;
+    --outline-scrollbar-hit-width: 0.5rem;
+    --outline-scrollbar-thumb-width: 0.7125rem;
+    --outline-scrollbar-min-thumb-size: 2rem;
+    --outline-scrollbar-thumb-opacity: 0.5;
+    --outline-scrollbar-fade-out-delay: 0.24s;
+    --outline-scrollbar-fade-duration: 0.48s;
+    --outline-scrollbar-fade-easing: cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: system-ui, sans-serif;
+    font-size: var(--outline-font-size);
+    overflow: hidden;
+    color: var(--ws-list-foreground);
+    background: var(--ws-list-background);
+}
+
+.outline-panel {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    height: 100%;
+    min-height: 0;
+    background: var(--ws-list-background);
+}
+
+.outline-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--outline-toolbar-gap);
+    min-height: var(--outline-toolbar-height);
+    background: var(--ws-list-background);
+}
+
+.outline-toolbar__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--outline-toolbar-button-size);
+    height: var(--outline-toolbar-button-size);
+    border: 0;
+    border-radius: var(--outline-row-radius);
+    padding: 0;
+    color: var(--ws-button-foreground);
+    background: transparent;
+    cursor: pointer;
+}
+
+.outline-toolbar__button:hover:not(:disabled) {
+    color: var(--ws-button-hoverForeground);
+    background: var(--ws-button-hoverBackground);
+}
+
+.outline-toolbar__button.is-active {
+    color: var(--ws-button-activeForeground);
+    background: var(--ws-button-activeBackground);
+}
+
+.outline-toolbar__button:disabled {
+    opacity: var(--outline-disabled-opacity);
+    cursor: default;
+}
+
+.outline-toolbar__icon {
+    width: var(--outline-toolbar-icon-size);
+    height: var(--outline-toolbar-icon-size);
+}
+
+.outline-search {
+    padding-block: var(--outline-toolbar-gap);
+    padding: 5px;
+}
+
+.outline-search__input {
+    width: 100%;
+    height: var(--outline-search-height);
+    border: var(--outline-search-border-width) solid var(--ws-input-border);
+    border-radius: var(--outline-radius);
+    padding-inline: var(--outline-search-padding);
+    box-sizing: border-box;
+    color: var(--ws-input-foreground);
+    background: var(--ws-input-background);
+    font: inherit;
+    outline: none;
+}
+
+.outline-search__input:focus {
+    border-color: var(--ws-input-focusBorder);
+}
+
+.outline-scroll-area {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.outline-body {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-block: var(--outline-inline-padding);
+    scrollbar-width: none;
+}
+
+.outline-body::-webkit-scrollbar {
+    display: none;
+}
+
+.outline-scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--outline-scrollbar-hit-width);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.outline-scrollbar.is-visible {
+    visibility: visible;
+}
+
+.outline-scrollbar.is-interactive .outline-scrollbar__thumb {
+    pointer-events: auto;
+}
+
+.outline-scrollbar__thumb {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--outline-scrollbar-thumb-width);
+    min-height: var(--outline-scrollbar-min-thumb-size);
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: var(--ws-editor-scrollbarSlider-background);
+    box-shadow: none;
+    cursor: default;
+    pointer-events: none;
+    will-change: opacity;
+    transition: background-color var(--outline-scrollbar-fade-duration) var(--outline-scrollbar-fade-easing);
+}
+
+.outline-scrollbar__thumb:hover {
+    background: var(--ws-editor-scrollbarSlider-hoverBackground);
+}
+
+.outline-scrollbar__thumb:active {
+    background: var(--ws-editor-scrollbarSlider-activeBackground);
+}
+
+.outline-tree {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.outline-body > .outline-tree {
+    padding: var(--outline-panel-padding);
+}
+
+.outline-item__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    border-radius: var(--outline-row-radius);
+    min-height: var(--outline-row-height);
+    padding-inline: calc(var(--outline-inline-padding) + var(--outline-depth) * var(--outline-indent-size)) var(--outline-inline-padding);
+}
+
+.outline-item__row::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--outline-inline-padding) + var(--outline-indent-guide-offset));
+    width: calc(var(--outline-depth) * var(--outline-indent-size));
+    background-image: repeating-linear-gradient(
+        to right,
+        var(--ws-editor-indentGuide-background) 0,
+        var(--ws-editor-indentGuide-background) var(--outline-indent-guide-width),
+        transparent var(--outline-indent-guide-width),
+        transparent var(--outline-indent-size)
+    );
+    content: '';
+    pointer-events: none;
+}
+
+.outline-item__row:hover {
+    background: var(--ws-list-hoverBackground);
+}
+
+.outline-item__row.is-active {
+    background: var(--ws-list-activeSelectionBackground);
+}
+
+.outline-item__toggle,
+.outline-item__spacer {
+    width: var(--outline-icon-size);
+    height: var(--outline-icon-size);
+    flex: 0 0 var(--outline-icon-size);
+    margin-inline-end: var(--outline-inline-padding);
+}
+
+.outline-item__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    color: var(--ws-icon-foreground);
+    background: transparent;
+    cursor: pointer;
+}
+
+.outline-item__toggle:focus-visible,
+.outline-item__label:focus-visible,
+.outline-toolbar__button:focus-visible {
+    outline: var(--outline-focus-width) solid var(--ws-focusBorder);
+    outline-offset: 0;
+}
+
+.outline-icon {
+    width: var(--outline-icon-size);
+    height: var(--outline-icon-size);
+    transition: transform var(--outline-motion-duration) ease;
+}
+
+.outline-item__toggle.is-expanded .outline-icon {
+    transform: rotate(90deg);
+}
+
+.outline-item__label {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--outline-radius);
+    padding: 0;
+    color: var(--ws-list-foreground);
+    background: transparent;
+    line-height: var(--outline-row-height);
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size:0.8rem;
+}
+
+.outline-item__label.is-active {
+    color: var(--ws-list-activeForeground);
+}
+
+.outline-empty {
+    padding: var(--outline-row-height) var(--outline-inline-padding);
+    margin: 0;
+    color: var(--ws-descriptionForeground);
+    text-align: center;
+}

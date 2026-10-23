@@ -1,0 +1,12 @@
+// 文件说明：定义 Default 风格活动栏按停放方向显示的边框。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .workbench-icon-rail:not(.workbench-icon-rail--modern).activityBar--left {
+    border-right: $editor-table-border-width solid var(--ws-activityBar-border);
+  }
+
+  .workbench-icon-rail:not(.workbench-icon-rail--modern).activityBar--right {
+    border-left: $editor-table-border-width solid var(--ws-activityBar-border);
+  }
+}

@@ -1,0 +1,7 @@
+/* 文件说明：网页查看器第三方示例的必要根样式文件。 */
+.plugin-view-panel__content[data-plugin-id="com.example.web-viewer"] {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}

@@ -1,0 +1,42 @@
+{
+  "id": "wstudio-default",
+  "name": "wstudio-default",
+  "displayName": "WStudio Default",
+  "description": "Built-in WStudio default themes.",
+  "version": "1.0.0",
+  "author": "WStudio",
+  "categories": ["Themes"],
+  "keywords": ["theme",  "dark", "light", "wstudio"],
+  "themes": [
+    {
+      "id": "TokyoNight",
+      "label": "Tokyo Night",
+      "appearance": "light",
+      "file": "themes/wstudio-tokyo-night.json"
+    },
+    {
+      "id": "wstudio-light",
+      "label": "WStudio Light",
+      "appearance": "light",
+      "file": "themes/wstudio-light-color-theme.json"
+    },
+    {
+      "id": "wstudio-Bearded-light",
+      "label": "Bearded Coffee Cream",
+      "appearance": "light",
+      "file": "themes/wstudio-Bearded.json"
+    },
+    {
+      "id": "wstudio-2026-dark",
+      "label": "2026 深色",
+      "appearance": "dark",
+      "file": "themes/wstudio-2026.json"
+    },
+    {
+      "id": "wstudio-githubDimmed-dark",
+      "label": "github Dimmed",
+      "appearance": "dark",
+      "file": "themes/wstudio-githubDimmed.json"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+// 文件说明：提供标题栏及其相邻工作台区域复用的项目颜色渐变样式。
+@use './variables' as *;
+
+/** 将预设项目颜色写入通用渐变 CSS 变量。 */
+@mixin project-gradient-color($color) {
+  --ws-project-color: #{$color};
+}
+
+.ws-project-gradient--amber {
+  @include project-gradient-color($project-color-amber);
+}
+
+.ws-project-gradient--olive {
+  @include project-gradient-color($project-color-olive);
+}
+
+.ws-project-gradient--grass-green {
+  @include project-gradient-color($project-color-grass-green);
+}
+
+.ws-project-gradient--sea-blue {
+  @include project-gradient-color($project-color-sea-blue);
+}
+
+.ws-project-gradient--sky-blue {
+  @include project-gradient-color($project-color-sky-blue);
+}
+
+.ws-project-gradient--cobalt-blue {
+  @include project-gradient-color($project-color-cobalt-blue);
+}
+
+.ws-project-gradient--purple {
+  @include project-gradient-color($project-color-purple);
+}
+
+.ws-project-gradient--magenta {
+  @include project-gradient-color($project-color-magenta);
+}

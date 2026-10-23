@@ -1,0 +1,8 @@
+// 文件说明：定义 Default 风格标题栏的底部边框。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .workbench-title-bar:not(.workbench-title-bar--modern) {
+    border-bottom: $editor-table-border-width solid var(--ws-titleBar-border,transparent);
+  }
+}

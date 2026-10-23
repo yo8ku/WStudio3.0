@@ -1,0 +1,30 @@
+{
+  "$schema": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "id": "com.example.word-count",
+  "name": "Word Count",
+  "version": "1.0.0",
+  "description": "A minimal command-only WStudio plugin.",
+  "author": {
+    "name": "WStudio Example Team"
+  },
+  "license": "MIT",
+  "minAppVersion": "0.1.0",
+  "apiVersion": "1.0",
+  "main": "main.js",
+  "activationEvents": [
+    "onCommand:com.example.word-count.show"
+  ],
+  "permissions": [],
+  "contributes": {
+    "commands": [
+      {
+        "id": "com.example.word-count.show",
+        "title": "Show Word Count",
+        "description": "Logs a message to the plugin diagnostics channel."
+      }
+    ],
+    "views": [],
+    "settings": [],
+    "statusBar": []
+  }
+}

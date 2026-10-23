@@ -1,0 +1,14 @@
+/** 文件说明：提供宿主工作台统一的字体图标基础样式和 glyph 映射。 */
+
+@use './icons.scss';
+
+.icon {
+  display: inline-block;
+  font-family: 'Untitled' !important;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

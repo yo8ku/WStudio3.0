@@ -1,0 +1,23 @@
+// 文件说明：定义 Default 风格下停靠工作区的通用分隔和面板外观。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .docking-three-workspace {
+    --docking-workspace-panel-radius: #{$radius-none};
+    --docking-workspace-panel-border-width: #{$spacing-none};
+  }
+
+  .docking-three-workspace > :deep(.docking-three-split--horizontal > .docking-three-split__item) {
+    box-sizing: border-box;
+    overflow: hidden;
+    border: var(--docking-workspace-panel-border-width) solid var(--ws-border, transparent);
+    border-radius: var(--docking-workspace-panel-radius);
+  }
+
+
+  .docking-three-workspace:not(.docking-three-workspace--modern)
+    > :deep(.docking-three-split--horizontal > .docking-three-split__item.sideBar--right) {
+    border-left: $editor-table-border-width solid var(--ws-border);
+  }
+
+}

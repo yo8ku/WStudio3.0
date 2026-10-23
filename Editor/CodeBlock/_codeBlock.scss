@@ -1,0 +1,109 @@
+// 文件说明：定义 CodeMirror 官方 BlockWrapper 代码块样式
+@use '@/assets/styles/variables' as *;
+
+:deep(.cm-editor-code-block) {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to right,
+    transparent 0 var(--workbench-editor-code-block-inline-offset),
+    var(--ws-markdown-codeBakckground) var(--workbench-editor-code-block-inline-offset) 100%
+  );
+  border-radius: $radius-xs;
+}
+
+:deep(.cm-editor-code-block .cm-line) {
+  padding-inline-start: calc(var(--workbench-editor-code-block-inline-offset) + #{$spacing-xs});
+  padding-inline-end: $spacing-xs;
+}
+
+:deep(.cm-editor-code-block .cm-indent-markers::before) {
+  left: calc(
+    var(--workbench-editor-code-block-inline-offset) +
+    #{$spacing-xs} -
+    var(--workbench-editor-code-block-line-indent)
+  );
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-block__line) {
+  text-indent: calc(var(--workbench-editor-code-block-line-indent) * -1);
+}
+
+:deep(.cm-editor-code-block__language) {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: $spacing-xs;
+  z-index: 1;
+  color: var(--ws-editor-codeBlock-languageForeground);
+  font-size: $font-size-xs;
+  margin-right: $spacing-sm;
+  transform: translateY(-100%);
+}
+
+:deep(.cm-editor-code-block:focus-within .cm-editor-code-block__language) {
+  display: none;
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--keyword) {
+  color: var(--ws-editor-codeBlock-keywordForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--variable) {
+  color: var(--ws-editor-codeBlock-variableForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--property) {
+  color: var(--ws-editor-codeBlock-propertyForeground) !important;
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--function) {
+  color: var(--ws-editor-codeBlock-functionForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--type) {
+  color: var(--ws-editor-codeBlock-typeForeground) !important;
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--string) {
+  color: var(--ws-editor-codeBlock-stringForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--number) {
+  color: var(--ws-editor-codeBlock-numberForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--constant) {
+  color: var(--ws-editor-codeBlock-constantForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--boolean) {
+  color: var(--ws-editor-codeBlock-booleanForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--null) {
+  color: var(--ws-editor-codeBlock-nullForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--comment) {
+  color: var(--ws-editor-codeBlock-commentForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--operator) {
+  color: var(--ws-editor-codeBlock-operatorForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--punctuation) {
+  color: var(--ws-editor-codeBlock-punctuationForeground);
+}
+
+:deep(.cm-editor-code-block .cm-editor-code-token--invalid) {
+  color: var(--ws-editor-codeBlock-invalidForeground) !important;
+}
+
+:deep(.cm-editor-code-block :is(.cm-editor-code-block__language-source, .cm-editor-code-block__language-source *)) {
+  color: var(--ws-editor-codeBlock-languageForeground) !important;
+}
+
+:deep(.cm-editor-code-block :is(.cm-editor-code-block__fence-source, .cm-editor-code-block__fence-source *)) {
+  color: var(--ws-editor-codeBlock-punctuationForeground) !important;
+}

@@ -1,0 +1,8 @@
+// 文件说明：定义 Default 风格状态栏的顶部边框。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .status-bar:not(.status-bar--modern) {
+    border-top: $editor-table-border-width solid var(--ws-statusBar-border);
+  }
+}

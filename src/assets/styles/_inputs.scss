@@ -1,0 +1,24 @@
+// 文件说明：统一 Vuetify 描边输入框的基础主题视觉状态
+@use './variables' as *;
+
+.v-field--variant-outlined {
+  color: var(--ws-input-foreground);
+  background: var(--ws-input-background);
+  border-radius: $input-border-radius;
+}
+
+.v-field--variant-outlined .v-field__outline {
+  --v-field-border-width: #{$input-border-width};
+  --v-field-border-opacity: 1;
+  color: var(--ws-input-border);
+}
+
+.v-field--variant-outlined.v-field--focused .v-field__outline {
+  --v-field-border-width: #{$input-border-width};
+  color: var(--ws-input-focusBorder);
+}
+
+.v-field--variant-outlined .v-field__input {
+  padding-block: $input-padding-block;
+  padding-inline: $input-padding-inline;
+}

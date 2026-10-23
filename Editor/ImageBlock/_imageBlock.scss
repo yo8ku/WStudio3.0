@@ -1,0 +1,130 @@
+// 文件说明：定义直接挂载到 CodeMirror 官方 Widget DOM 的图片块样式
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/mixins' as *;
+@use '@editor/Block/editorBlock' as editor-block;
+
+@mixin styles {
+  :deep(.cm-editor-image-block) {
+    @include editor-block.root;
+    min-height: $editor-image-block-min-height;
+    padding-top: $editor-media-block-top-padding;
+    padding-bottom: $editor-block-gap;
+  }
+
+  :deep(.cm-editor-image-block[data-editor-block-state='selected']::after),
+  :deep(.cm-editor-image-block[data-editor-block-state='editing']::after) {
+    @include editor-block.selection-outline(
+      $editor-media-block-top-padding 0 $editor-block-gap
+    );
+  }
+
+  :deep(.cm-editor-image-block__image) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: $editor-image-block-content-max-height;
+    margin: 0 auto;
+    border-radius: $radius-xs;
+  }
+
+  :deep(.cm-editor-image-block[data-resize-state='resizing']),
+  :deep(.cm-editor-image-block[data-resize-state='resized']) {
+    min-height: 0;
+  }
+
+  :deep(.cm-editor-image-block[data-resize-state='resizing'] .cm-editor-image-block__image),
+  :deep(.cm-editor-image-block[data-resize-state='resized'] .cm-editor-image-block__image) {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+  }
+
+  :deep(.cm-editor-image-block__actions) {
+    position: absolute;
+    z-index: $editor-block-action-z-index;
+    top: $editor-block-action-offset;
+    right: $editor-block-action-offset;
+  }
+
+  :deep(.cm-editor-image-block__edit),
+  :deep(.cm-editor-image-block__title-toggle) {
+    @include editor-block.action-button;
+  }
+
+  :deep(.cm-editor-image-block__edit:hover),
+  :deep(.cm-editor-image-block__title-toggle:hover) {
+     color: var(--ws-button-activeForeground);
+  }
+
+  :deep(.cm-editor-image-block__edit:focus-visible),
+  :deep(.cm-editor-image-block__title-toggle:focus-visible) {
+    @include editor-block.action-button-focus;
+  }
+
+  :deep(.cm-editor-image-block__edit-icon),
+  :deep(.cm-editor-image-block__title-toggle-icon) {
+    @include editor-block.action-icon;
+  }
+
+  :deep(.cm-editor-image-block__title) {
+    position: absolute;
+    right: 0;
+    bottom: $editor-block-gap;
+    left: 0;
+    padding-right: $editor-block-action-size;
+    overflow: hidden;
+    color: var(--ws-markdown-BlockTitleForeground);
+    background: var(--ws-markdown-BlockTitleBackground);
+    box-sizing: border-box;
+    font-size: $font-size-sm;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  :deep(.cm-editor-image-block__title[hidden]) {
+    display: none;
+  }
+
+  :deep(.cm-editor-image-block__resize-handle) {
+    position: absolute;
+    right: 0;
+    bottom: $editor-block-gap;
+    width: $editor-image-block-resize-handle-size;
+    height: $editor-image-block-resize-handle-size;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ws-focusBorder);
+    box-sizing: border-box;
+    cursor: nwse-resize;
+    opacity: 0;
+    pointer-events: none;
+    touch-action: none;
+    transform: translate(50%, 50%);
+  }
+
+  :deep(.cm-editor-image-block[data-editor-block-state='selected'] .cm-editor-image-block__resize-handle),
+  :deep(.cm-editor-image-block[data-editor-block-state='editing'] .cm-editor-image-block__resize-handle) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  :deep(.cm-editor-image-block__error) {
+    display: none;
+    color: var(--ws-descriptionForeground);
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+
+  :deep(.cm-editor-image-block[data-image-state='error'] .cm-editor-image-block__image) {
+    display: none;
+  }
+
+  :deep(.cm-editor-image-block[data-image-state='error'] .cm-editor-image-block__error) {
+    @include flex-center;
+    min-height: $editor-image-block-min-height;
+  }
+}

@@ -1,0 +1,116 @@
+/* 文件说明：网页浏览器插件视图的自有主题化工具栏与地址输入框样式。 */
+.plugin-view-panel__content[data-plugin-id="com.wstudio.web-viewer"] {
+    --web-viewer-toolbar-height: 40px;
+    --web-viewer-progress-height: 2px;
+    color-scheme: light dark;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+}
+
+.web-viewer-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--web-viewer-toolbar-height);
+    padding: 0 8px;
+    border-bottom: 1px solid var(--ws-border);
+    box-sizing: border-box;
+}
+
+.web-viewer-toolbar button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 28px;
+    border: 0;
+    border-radius: 4px;
+    padding: 0;
+    color: var(--ws-icon-foreground);
+    background: transparent;
+    cursor: pointer;
+}
+
+.web-viewer-toolbar button:hover:not(:disabled) {
+    color: var(--ws-icon-hoverForeground);
+    background: var(--ws-list-hoverBackground);
+}
+
+.web-viewer-toolbar button:active:not(:disabled) {
+    color: var(--ws-list-activeForeground);
+    background: var(--ws-list-activeSelectionBackground);
+}
+
+.web-viewer-toolbar button:focus-visible {
+    outline: 1px solid var(--ws-focusBorder);
+    outline-offset: 0;
+}
+
+.web-viewer-toolbar button svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.web-viewer-toolbar button:disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+.web-viewer-address {
+    flex: 1;
+    min-width: 0;
+    height: 28px;
+    border: 1px solid var(--ws-input-border);
+    border-radius: 4px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    outline: none;
+    color: var(--ws-input-foreground);
+    background: var(--ws-input-background);
+}
+
+.web-viewer-address:focus {
+    border-color: var(--ws-input-focusBorder);
+}
+
+.web-viewer-content {
+    position: absolute;
+    inset: calc(var(--web-viewer-toolbar-height) + var(--web-viewer-progress-height)) 0 0;
+    pointer-events: none;
+}
+
+.web-viewer-progress {
+    position: absolute;
+    top: var(--web-viewer-toolbar-height);
+    left: 0;
+    width: 100%;
+    height: var(--web-viewer-progress-height);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.web-viewer-progress::after {
+    content: '';
+    display: block;
+    width: 30%;
+    height: 100%;
+    background: var(--ws-focusBorder);
+    animation: web-viewer-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes web-viewer-loading {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(340%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .web-viewer-progress::after {
+        width: 100%;
+        animation: none;
+    }
+}

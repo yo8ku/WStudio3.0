@@ -1,0 +1,500 @@
+// 文件说明：定义原生 Markdown 表格块的唯一生效样式。
+@use '../../src/assets/styles/variables' as variables;
+
+@mixin styles {
+  :deep(.cm-editor-table-shell) {
+    --workbench-scrollbar-hit-height: #{variables.$scrollbar-hit-width};
+    --workbench-scrollbar-thumb-height: #{variables.$scrollbar-hit-width};
+    --workbench-scrollbar-thumb-min-width: #{variables.$scrollbar-thumb-min-height};
+    --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+    --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+    --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    width: calc(100% + variables.$spacing-md);
+    // 表格的最小列宽只影响自身滚动范围，不参与正文 Flex 容器的宽度计算。
+    contain: inline-size;
+    // 为第一列左侧的行拖拽手柄留出滚动区域，表格内容仍与正文对齐。
+    margin-inline-start: calc(variables.$spacing-md * -1);
+  }
+
+  :deep(.cm-editor-table-scroll) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    padding-inline-start: variables.$spacing-md;
+  }
+
+  :deep(.cm-editor-table-scroll::-webkit-scrollbar) {
+    display: none;
+  }
+
+  // 由组件的 v-show 同时控制滚动条和占位，隐藏时宿主自然收缩为零高度。
+  :deep(.cm-editor-table-scrollbar .scrollbar-horizontal) {
+    position: relative;
+    margin-top: 0.2rem;
+  }
+
+  :deep(.cm-editor-table-block) {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    width: fit-content;
+    padding-block-start: variables.$spacing-md;
+    padding-block-end: variables.$spacing-md;
+    padding-inline-start: 0;
+    padding-inline-end: variables.$spacing-md;
+  }
+
+  :deep(.cm-editor-table-block[data-column-drop-active='true']::after) {
+    position: absolute;
+    top: variables.$spacing-md;
+    bottom: variables.$spacing-md;
+    left: var(--cm-editor-table-drop-line-x);
+    z-index: 4;
+    width: calc(variables.$editor-table-border-width * 2);
+    background: var(--ws-focusBorder);
+    content: '';
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  :deep(.cm-editor-table-block[data-row-drop-active='true']::before) {
+    position: absolute;
+    right: variables.$spacing-md;
+    left: 0;
+    top: var(--cm-editor-table-drop-line-y);
+    z-index: 4;
+    height: calc(variables.$editor-table-border-width * 2);
+    background: var(--ws-focusBorder);
+    content: '';
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  :deep(.cm-editor-table-line-number) {
+    display: block;
+    padding-block-start: variables.$spacing-md;
+  }
+
+  :deep(.cm-editor-table) {
+    max-width: 100%;
+    // 外沿由表格绘制，单元格补齐右下边，避开内嵌滚动层聚焦时的合并边框裁切。
+    border-collapse: separate;
+    border-spacing: 0;
+    border-block-start: variables.$editor-table-border-width solid var(--ws-editor-tableBorder);
+    border-inline-start: variables.$editor-table-border-width solid var(--ws-editor-tableBorder);
+    color: var(--ws-editor-tableForeground);
+    background: var(--ws-editor-tableBackground);
+  }
+
+  :deep(.cm-editor-table th),
+  :deep(.cm-editor-table td) {
+    position: relative;
+    height: auto;
+    padding: variables.$spacing-2xs variables.$spacing-xs;
+    border: 0;
+    border-inline-end: variables.$editor-table-border-width solid var(--ws-editor-tableBorder);
+    border-block-end: variables.$editor-table-border-width solid var(--ws-editor-tableBorder);
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    vertical-align: top;
+    cursor: text;
+  }
+
+  :deep(.cm-editor-table th) {
+    height: variables.$editor-table-row-min-height;
+    text-align: left;
+    color: var(--ws-editor-tableHeaderForeground);
+    background: var(--ws-editor-tableHeaderBackground);
+    font-weight: variables.$editor-table-header-font-weight;
+    font-size: variables.$font-size-tableTh;
+  }
+
+  :deep(.cm-editor-table__image) {
+    max-width: 100%;
+    max-height: variables.$editor-image-block-content-max-height;
+    object-fit: contain;
+    vertical-align: middle;
+    cursor: default;
+  }
+
+  :deep(.cm-editor-table__media-layout) {
+    --cm-editor-table-image-justify: start;
+    // 图片按真实尺寸占列，文本轨道在窄列中收缩并允许长内容断行。
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas: 'media content';
+    align-items: center;
+    gap: variables.$spacing-xs;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-position='right']) {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas: 'content media';
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-position='top']),
+  :deep(.cm-editor-table__media-layout[data-image-position='bottom']) {
+    --cm-editor-table-image-justify: center;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'media' 'content';
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-position='bottom']) {
+    grid-template-areas: 'content' 'media';
+  }
+
+  // 只让带附件的单元格参与容器查询，避免改变普通表格列的 intrinsic sizing。
+  :deep(.cm-editor-table th:has(.cm-editor-table__media-layout)),
+  :deep(.cm-editor-table td:has(.cm-editor-table__media-layout)) {
+    container-type: inline-size;
+  }
+
+  // 窄列无法同时容纳图片和正文时改为上下排列，避免两列互相覆盖。
+  @container (max-width: 24rem) {
+    :deep(.cm-editor-table__media-layout[data-image-position='left']),
+    :deep(.cm-editor-table__media-layout[data-image-position='right']) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'media' 'content';
+    }
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-alignment='top']) {
+    align-items: start;
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-alignment='bottom']) {
+    align-items: end;
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-alignment='left']) {
+    --cm-editor-table-image-justify: start;
+  }
+
+  :deep(.cm-editor-table__media-layout[data-image-alignment='right']) {
+    --cm-editor-table-image-justify: end;
+  }
+
+  :deep(.cm-editor-table__media) {
+    grid-area: media;
+    justify-self: var(--cm-editor-table-image-justify);
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing-2xs;
+  }
+
+  :deep(.cm-editor-table__image-frame) {
+    position: relative;
+  }
+
+  // 独立附件按指定宽高显示；行内 Markdown 图片仍沿用等比适配规则。
+  :deep(.cm-editor-table__image-frame .cm-editor-table__image) {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: none;
+    max-height: none;
+    object-fit: fill;
+  }
+
+  :deep(.cm-editor-table__image[data-image-context-state='active']) {
+    box-sizing: border-box;
+    border-radius: variables.$radius-xs;
+    border: 2px solid var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-table__media-layout > .cm-editor-table__content),
+  :deep(.cm-editor-table__media-layout > .cm-editor-table__editor) {
+    grid-area: content;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  :deep(.cm-editor-table__media-layout > .cm-editor-table__content) {
+    white-space: normal;
+  }
+
+  :deep(.cm-editor-table-block[data-editor-block-state='selected'] th),
+  :deep(.cm-editor-table-block[data-editor-block-state='selected'] td) {
+    background: var(--ws-editor-selectionBackground);
+  }
+
+  :deep(.cm-editor-table-block[data-editor-block-state='selected'] .cm-editor-table *::selection) {
+    background-color: transparent !important;
+  }
+
+  :deep(.cm-editor-table th.cm-editor-table__new-column) {
+    min-width: variables.$editor-table-cell-min-width;
+  }
+
+  :deep(.cm-editor-table__drag-handle) {
+    position: absolute;
+    top: calc(variables.$spacing-md * -1);
+    left: 0;
+    z-index: variables.$editor-table-floating-handle-z-index;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: variables.$spacing-md;
+    color: var(--ws-descriptionForeground);
+    cursor: grab;
+    opacity: 0;
+    background: transparent;
+  }
+
+  :deep(.cm-editor-table th:hover .cm-editor-table__drag-handle),
+  // 菜单浮层接管鼠标后，目标列的手柄仍保持可见。
+  :deep(.cm-editor-table th[data-column-context-state='active'] .cm-editor-table__drag-handle),
+  :deep(.cm-editor-table__drag-handle:hover),
+  :deep(.cm-editor-table__drag-handle:focus-visible) {
+    opacity: 1;
+  }
+
+  :deep(.cm-editor-table__drag-handle:active) {
+    opacity: 1;
+    background: var(--ws-button-hoverBackground);
+    cursor: grabbing;
+  }
+
+  :deep(.cm-editor-table th[data-column-drag-state='source']) {
+    background: var(--ws-button-hoverBackground);
+  }
+
+  :deep(.cm-editor-table [data-column-drag-state='source']),
+  :deep(.cm-editor-table [data-column-context-state='active']) {
+    z-index: 1;
+    box-shadow: none;
+  }
+
+  :deep(.cm-editor-table [data-column-drag-state='source']::after),
+  :deep(.cm-editor-table [data-column-context-state='active']::after) {
+    position: absolute;
+    inset: calc(variables.$editor-table-border-width * -1) 0;
+    z-index: 3;
+    box-sizing: border-box;
+    border-inline: calc(variables.$editor-table-border-width * 2) solid var(--ws-focusBorder);
+    content: '';
+    pointer-events: none;
+  }
+
+  :deep(.cm-editor-table thead [data-column-drag-state='source']::after),
+  :deep(.cm-editor-table thead [data-column-context-state='active']::after) {
+    border-top-color: var(--ws-focusBorder);
+    border-top-style: solid;
+    border-top-width: calc(variables.$editor-table-border-width * 2);
+  }
+
+  :deep(.cm-editor-table tbody tr:last-child [data-column-drag-state='source']::after),
+  :deep(.cm-editor-table tbody tr:last-child [data-column-context-state='active']::after) {
+    border-bottom-color: var(--ws-focusBorder);
+    border-bottom-style: solid;
+    border-bottom-width: calc(variables.$editor-table-border-width * 2);
+    border-bottom-left-radius: variables.$radius-xs;
+    border-bottom-right-radius: variables.$radius-xs;
+  }
+
+  :deep(.cm-editor-table th[data-column-drag-state='source'] .cm-editor-table__drag-handle) {
+    opacity: 1;
+    border-radius: variables.$radius-xs variables.$radius-xs 0 0;
+    color: var(--ws-editor-tableHeaderForeground);
+    background: var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-table__drag-handle svg) {
+    display: block;
+    width: variables.$font-size-sm;
+    height: variables.$font-size-sm;
+  }
+
+  :deep(.cm-editor-table__row-drag-handle) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: variables.$editor-table-floating-handle-z-index;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: variables.$spacing-md;
+    height: 100%;
+    color: var(--ws-descriptionForeground);
+    cursor: grab;
+    opacity: 0;
+    background: transparent;
+    transform: translateX(-100%);
+  }
+
+  // 行手柄只随真实焦点或行选择显示，悬停其他行不额外显示手柄。
+  :deep(.cm-editor-table tbody tr[data-row-context-state='active'] .cm-editor-table__row-drag-handle),
+  :deep(.cm-editor-table tbody tr:focus-within .cm-editor-table__row-drag-handle) {
+    opacity: 1;
+  }
+
+  :deep(.cm-editor-table tbody tr[data-row-drag-state='source'] .cm-editor-table__row-drag-handle) {
+    opacity: 1;
+    border-radius: variables.$radius-xs 0 0 variables.$radius-xs;
+    color: var(--ws-editor-tableHeaderForeground);
+    background: var(--ws-focusBorder);
+    cursor: grabbing;
+  }
+
+  :deep(.cm-editor-table tbody tr[data-row-drag-state='source'] td) {
+    background: var(--ws-button-hoverBackground);
+  }
+
+  :deep(.cm-editor-table tbody tr[data-row-drag-state='source'] td::before),
+  :deep(.cm-editor-table tbody tr[data-row-context-state='active'] td::before) {
+    position: absolute;
+    inset: 0 calc(variables.$editor-table-border-width * -1);
+    z-index: 3;
+    box-sizing: border-box;
+    border-block: calc(variables.$editor-table-border-width * 2) solid var(--ws-focusBorder);
+    content: '';
+    pointer-events: none;
+  }
+
+  :deep(.cm-editor-table tbody tr[data-row-drag-state='source'] td:first-child::before),
+  :deep(.cm-editor-table tbody tr[data-row-context-state='active'] td:first-child::before) {
+    border-inline-start: calc(variables.$editor-table-border-width * 2) solid var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-table tbody tr[data-row-drag-state='source'] td:last-child::before),
+  :deep(.cm-editor-table tbody tr[data-row-context-state='active'] td:last-child::before) {
+    border-inline-end: calc(variables.$editor-table-border-width * 2) solid var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-table__add-button) {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: variables.$editor-table-border-width solid var(--ws-editor-tableBorder);
+    color: var(--ws-descriptionForeground);
+    background: transparent;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: auto;
+  }
+
+  :deep(.cm-editor-table__add-button:hover),
+  :deep(.cm-editor-table__add-button:focus-visible) {
+    opacity: 1;
+    color: var(--ws-editor-tableHeaderForeground);
+  }
+
+  :deep(.cm-editor-table__add-button--row) {
+    right: variables.$spacing-md;
+    bottom: 0;
+    left: 0;
+    height: variables.$spacing-md;
+    border-top: none;
+  }
+
+  :deep(.cm-editor-table__add-button--column) {
+    top: variables.$spacing-md;
+    right: 0;
+    bottom: variables.$spacing-md;
+    width: variables.$spacing-md;
+    border-left: none;
+  }
+
+  :deep(.cm-editor-table__add-button svg) {
+    display: block;
+    width: variables.$font-size-sm;
+    height: variables.$font-size-sm;
+  }
+
+  :deep(.cm-editor-table [data-table-alignment='center']) {
+    text-align: center;
+  }
+
+  :deep(.cm-editor-table [data-table-alignment='right']) {
+    text-align: right;
+  }
+
+  :deep(.cm-editor-table__content) {
+    display: block;
+    box-sizing: border-box;
+    min-height: var(--workbench-editor-line-height);
+    min-width: variables.$editor-table-cell-min-width;
+    padding-inline-end: variables.$editor-cursor-width;
+  }
+
+  :deep(.cm-editor-table__content)::selection,
+  :deep(.cm-editor-table__content *)::selection {
+    background-color: var(--ws-editor-selectionBackground) !important;
+  }
+
+  :deep(.cm-editor-table__editor) {
+    display: block;
+    width: auto;
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  :deep(.cm-editor-table__editor .cm-editor) {
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-align: inherit;
+  }
+
+  :deep(.cm-editor-table__editor .cm-editor.cm-focused) {
+    outline: none;
+  }
+
+  :deep(.cm-editor-table__editor .cm-scroller) {
+    overflow: hidden;
+    font: inherit;
+    line-height: inherit;
+  }
+
+  :deep(.cm-editor-table__editor .cm-content) {
+    min-width: variables.$editor-table-cell-min-width;
+    padding: 0;
+    caret-color: var(--ws-editor-cursor-foreground);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  // 行尾光标同样占据可见宽度，避免为显示光标横移正文并裁掉首尾字符。
+  :deep(.cm-editor-table__editor .cm-line) {
+    padding-inline-end: variables.$editor-cursor-width;
+  }
+
+  :deep(.cm-editor-table__editor .cm-line)::selection,
+  :deep(.cm-editor-table__editor .cm-line *)::selection {
+    background-color: transparent !important;
+  }
+
+  :deep(.cm-editor-table code) {
+    padding-inline: variables.$editor-inline-code-padding-x;
+    border-radius: variables.$radius-2px;
+    color: var(--ws-editor-inlineCodeForeground);
+    background: var(--ws-editor-inlineCodeBackground);
+    font: inherit;
+  }
+
+  :deep(.cm-editor-table strong) {
+    color: var(--ws-editor-strongForeground);
+    font-size: inherit;
+    font-weight: variables.$editor-strong-font-weight;
+  }
+
+  :deep(.cm-editor-table__editor .cm-markdown-strong-content),
+  :deep(.cm-editor-table__editor .cm-markdown-strong-source) {
+    font-size: inherit;
+  }
+}

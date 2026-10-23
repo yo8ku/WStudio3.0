@@ -1,0 +1,104 @@
+// 文件说明：定义 CodeMirror 块级 Widget 可复用的根容器、选中描边与工具按钮样式
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/mixins' as *;
+
+@mixin styles {
+  // 仅让块的真实内容接收指针事件，块根的上下间距交回编辑器处理。
+  :deep(figure.cm-editor-block) {
+    pointer-events: none;
+  }
+
+  :deep(figure.cm-editor-block > :not(.cm-editor-block__actions)) {
+    pointer-events: auto;
+  }
+
+  :deep(.cm-editor-block__actions) {
+    display: flex;
+    align-items: center;
+    gap: $editor-header-action-gap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  :deep(.cm-editor-block:hover .cm-editor-block__actions),
+  :deep(.cm-editor-block:focus-within .cm-editor-block__actions),
+  :deep(figure.cm-editor-block:has(> :not(.cm-editor-block__actions):hover) .cm-editor-block__actions) {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  :deep(.cm-editor-block[data-editor-block-state='selected'] .cm-editor-block__actions),
+  :deep(.cm-editor-block[data-editor-block-state='editing'] .cm-editor-block__actions) {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+// Block widgets stay on their own line while shrinking to their content.
+@mixin root(
+  $display: block,
+  $max-width: 100%,
+  $vertical-align: top,
+  $cursor: pointer,
+  $border-radius: $radius-xs
+) {
+  position: relative;
+  display: $display;
+  @if $vertical-align != null {
+    vertical-align: $vertical-align;
+  }
+  width: fit-content;
+  min-width: 0;
+  @if $max-width != null {
+    max-width: $max-width;
+  }
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  @if $border-radius != null {
+    border-radius: $border-radius;
+  }
+  box-sizing: border-box;
+  cursor: $cursor;
+}
+
+@mixin selection-outline($inset: 0) {
+  position: absolute;
+  inset: $inset;
+  border: $editor-block-border-width solid var(--ws-focusBorder);
+  border-radius: $radius-xs;
+  box-sizing: border-box;
+  content: '';
+  pointer-events: none;
+}
+
+@mixin action-button {
+  @include flex-center;
+  z-index: $editor-block-action-z-index;
+  padding: $compact-control-padding;
+  //border: $editor-block-border-width solid var(--ws-border);
+  border-radius: $radius-xs;
+  color: var(--ws-button-foreground);
+  background: var(--ws-button-background);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+@mixin action-button-hover {
+  background: var(--ws-button-hoverBackground);
+  color: var(--ws-button-hoverForeground);
+}
+
+@mixin action-button-focus {
+  outline: $editor-block-border-width solid var(--ws-focusBorder);
+  outline-offset: $spacing-3xs;
+}
+
+@mixin action-icon {
+  display: block;
+  width: $editor-block-action-icon-size;
+  height: $editor-block-action-icon-size;
+}

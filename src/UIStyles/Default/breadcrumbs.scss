@@ -1,0 +1,8 @@
+// 文件说明：定义 Default 风格路径导航的底部边框。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .workbench-breadcrumbs:not(.workbench-breadcrumbs--modern) {
+    border-bottom: $editor-table-border-width solid var(--ws-breadcrumbs-border,transparent);
+  }
+}

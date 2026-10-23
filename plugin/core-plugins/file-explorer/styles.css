@@ -1,0 +1,641 @@
+/* 文件说明：文件列表插件的自有主题、工具栏、文件树和右键菜单样式。 */
+.plugin-view-panel__content[data-plugin-id="com.wstudio.file-explorer"] {
+    --file-explorer-repository-border-width: 1px;
+    --wstudio-plugin-scrollbar-top-inset: 34px;
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--ws-list-foreground);
+    background: var(--ws-list-background);
+}
+
+.plugin-view-panel__content[data-plugin-id="com.wstudio.file-explorer"] button {
+    font: inherit;
+}
+
+.file-explorer {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+}
+
+.file-explorer-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    background: var(--ws-list-background);
+}
+
+.file-explorer-repository {
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    border: var(--file-explorer-repository-border-width) solid transparent;
+    border-radius: 3px;
+    padding: 2px 5px;
+    background: transparent;
+    font-size: 11px;
+    line-height: normal !important;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+.file-explorer-repository:hover, .file-explorer-repository:focus-visible, .file-explorer-repository.is-open {
+    border-color: var(--ws-focusBorder, var(--ws-border));
+}
+
+.file-explorer-repository,
+.file-explorer-repository:focus {
+    appearance: none;
+    box-shadow: none;
+}
+
+.file-explorer-repository__label, .file-explorer-repository-menu__label {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-explorer-repository__arrow {
+    width: 13px;
+    height: 13px;
+    flex-basis: 13px;
+}
+
+.file-explorer-menu-surface {
+    position: fixed;
+    z-index: 21;
+    max-width: calc(100vw - 8px);
+
+    padding: 4px;
+    border: 1px solid var(--ws-menu-border);
+    border-radius: 3px;
+    color: var(--ws-foreground);
+    background: var(--ws-menu-background);
+}
+
+.file-explorer-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+    min-height: 24px;
+    border: 0;
+    border-radius: 4px;
+    padding: 5px 7px;
+    background: transparent;
+    line-height: normal !important;
+    cursor: pointer;
+    margin-top: 2px;
+    outline: none;
+}
+
+.file-explorer-menu-item:hover,
+.file-explorer-menu-item:focus-visible,
+.file-explorer-menu-submenu:hover > .file-explorer-menu-item {
+    background: var(--ws-menu-hoverBackground);
+}
+
+.file-explorer-menu-item:active {
+    color: var(--ws-list-activeForeground);
+
+}
+
+.file-explorer-menu-item.is-active,
+.file-explorer-repository-menu__item.is-active {
+    color: var(--ws-list-activeForeground);
+    background: var(--ws-list-activeSelectionBackground);
+}
+
+
+
+.file-explorer-sort-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+}
+
+.file-explorer-sort-check svg {
+    width: 14px;
+    height: 14px;
+}
+
+.file-explorer-repository-menu {
+    box-sizing: border-box;
+    width: min(15rem, calc(100vw - 8px));
+}
+
+.file-explorer-repository-menu__item {
+    gap: 7px;
+}
+
+.file-explorer-repository-menu__name {
+    flex: 1 1 auto;
+    text-align: left;
+}
+
+.file-explorer-menu-separator {
+    height: 1px;
+    margin: 4px 0;
+    background: var(--ws-menu-border);
+}
+
+.file-explorer-repository-menu__separator {
+    margin: 4px 0;
+}
+
+
+.file-explorer-toolbar {
+    display: none;
+    flex: 0 0 auto;
+    align-items: center;
+    margin-left: auto;
+    gap: 2px;
+}
+
+.file-explorer:hover .file-explorer-toolbar,
+.file-explorer:focus-within .file-explorer-toolbar {
+    display: flex;
+}
+
+.file-explorer-toolbar button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 24px;
+    border: 0;
+    border-radius: 4px;
+    padding: 4px;
+    color: var(--ws-list-foreground,var(--ws-foreground));
+    background: transparent;
+    cursor: pointer;
+}
+
+.file-explorer-toolbar button:hover:not(:disabled), .file-explorer-row:hover {
+    background: var(--ws-list-hoverBackground);
+    color: var(--ws-list-hoverForeground);
+}
+
+.file-explorer-toolbar button:hover:not(:disabled) .file-explorer-icon, .file-explorer-row:hover .file-explorer-icon {
+    /*color: var(--ws-button-inactiveForeground);*/
+}
+
+.file-explorer-toolbar button:disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+.file-explorer-icon {
+    display: inline-flex;
+    width: 17px;
+    height: 16px;
+    flex: 0 0 17px;
+
+}
+
+.file-explorer-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.file-explorer-icon--placeholder {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.file-explorer-drag-avatar {
+    --file-explorer-drag-avatar-padding-inline: 4px;
+    --file-explorer-drag-avatar-gap: 5px;
+    position: fixed;
+    z-index: 1000;
+    display: block;
+    width: 132px;
+    height: 22px;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: transparent;
+    pointer-events: none;
+    user-select: none;
+}
+
+.file-explorer-pointer-dragging,
+.file-explorer-pointer-dragging * {
+    cursor: default !important;
+    user-select: none;
+}
+
+.file-explorer-list {
+    --file-explorer-indent-size: 16px;
+    --file-explorer-indent-guide-left: 15px;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: 3px 4px calc((25px + 3px) * 1);
+}
+
+.file-explorer-row {
+    --file-explorer-indent-guide-color: var(--ws-editor-indentGuide-background);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 25px;
+    width: 100%;
+    border: 0;
+    border-radius: 4px;
+    padding: 3px 8px 3px calc(8px + (var(--file-explorer-depth) * var(--file-explorer-indent-size)));
+    color: var(--ws-list-foreground);
+    background: transparent;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.file-explorer-row::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--file-explorer-indent-guide-left);
+    width: calc(var(--file-explorer-depth) * var(--file-explorer-indent-size));
+    background-image: repeating-linear-gradient(
+            to right,
+            var(--ws-indentGuide-background) 0,
+            var(--ws-indentGuide-background) 1px,
+            transparent 1px,
+            transparent var(--file-explorer-indent-size)
+    );
+    content: '';
+    pointer-events: none;
+}
+
+.file-explorer-row.is-active,
+.file-explorer-row--directory.is-drop-target,
+.file-explorer-repository.is-drop-target {
+    background: var(--ws-list-activeSelectionBackground);
+    color: var(--ws-list-activeForeground);
+}
+
+.file-explorer-row.is-active {
+    border-radius: 0;
+}
+
+.file-explorer-row.is-active.is-selection-start {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.file-explorer-row.is-active.is-selection-end {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.file-explorer-row.is-active .file-explorer-icon,
+.file-explorer-row--directory.is-drop-target .file-explorer-icon,
+.file-explorer-repository.is-drop-target .file-explorer-icon {
+    color: var(--ws-list-activeForeground);
+}
+
+.file-explorer-row__label,
+.file-explorer-operation-list__label {
+    display: block;
+    min-width: 0;
+    flex: 1 1 0;
+    overflow: hidden;
+    color: inherit;
+    line-height: normal !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-explorer-row__type {
+    max-width: 72px;
+    flex: 0 1 auto;
+    overflow: hidden;
+    padding: 1px 4px;
+    font-size: 11px;
+    line-height: normal;
+    opacity: 0.72;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ws-tag-foreground, var(--ws-foreground));
+    margin-right: 5px;
+}
+
+.file-explorer-directory-count {
+    display: inline-block;
+    margin-left: 6px;
+    color: var(--ws-descriptionForeground);
+    font-size: 11px;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.file-explorer-create-input {
+    box-sizing: border-box;
+    min-width: 0;
+    flex: 1;
+    height: 22px;
+    border: 1px solid var(--ws-input-focusBorder);
+    border-radius: 3px;
+    padding: 1px 4px;
+    color: var(--ws-input-foreground);
+    background: var(--ws-input-background);
+    font: inherit;
+    outline: none;
+    user-select: text;
+}
+
+.file-explorer-status, .file-explorer-empty {
+    margin: 0;
+    padding: 11px 10px;
+    color: var(--ws-descriptionForeground);
+    font-size: 12px;
+}
+
+.file-explorer-menu {
+    min-width: 160px;
+    z-index: 22;
+}
+
+.file-explorer-menu-action {
+    justify-content: space-between;
+    text-align: left;
+}
+
+.file-explorer-menu-action.is-danger {
+    color: var(--ws-danger-foreground);
+}
+
+.file-explorer-menu-submenu {
+    position: relative;
+}
+
+.file-explorer-menu-submenu__panel {
+    position: absolute;
+    display: none;
+    top: -4px;
+    left: 100%;
+    min-width: 160px;
+}
+
+.file-explorer-menu--opens-above .file-explorer-menu-submenu__panel {
+    top: auto;
+    bottom: -4px;
+}
+
+.file-explorer-menu-submenu:hover > .file-explorer-menu-submenu__panel {
+    display: block;
+}
+
+.file-explorer-menu-submenu__arrow {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    margin-left: auto;
+}
+
+.file-explorer-menu-submenu__arrow svg {
+    width: 100%;
+    height: 100%;
+}
+
+.file-explorer-operation-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-explorer-operation-dialog {
+    display: flex;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(480px, calc(100vh - 24px));
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid var(--ws-menu-border);
+    border-radius: 4px;
+    padding: 12px;
+    color: var(--ws-foreground);
+    background: var(--ws-menu-background);
+}
+
+.file-explorer-operation-dialog h2 {
+    margin: 0;
+    font-size: 14px;
+    line-height: normal;
+}
+
+.file-explorer-operation-search {
+    height: 28px;
+    border: 1px solid var(--ws-input-border);
+    border-radius: 3px;
+    padding: 3px 7px;
+    color: var(--ws-input-foreground);
+    background: var(--ws-input-background);
+    font: inherit;
+    outline: none;
+}
+
+.file-explorer-operation-search:focus {
+    border-color: var(--ws-input-focusBorder);
+}
+
+.file-explorer-operation-scroll-area {
+    position: relative;
+    min-height: 120px;
+    overflow: hidden;
+}
+
+.file-explorer-operation-list {
+    min-height: 120px;
+    max-height: min(360px, calc(100vh - 144px));
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding-right: 0.7125rem;
+    scrollbar-width: none;
+}
+
+.file-explorer-operation-list::-webkit-scrollbar {
+    display: none;
+}
+
+.file-explorer-operation-scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0.5rem;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.file-explorer-operation-scrollbar.is-visible {
+    visibility: visible;
+}
+
+.file-explorer-operation-scrollbar__thumb {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.7125rem;
+    min-height: 2rem;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    opacity: 0.5;
+    background: var(--ws-editor-scrollbarSlider-background);
+    box-shadow: none;
+    cursor: default;
+    pointer-events: auto;
+    touch-action: none;
+}
+
+.file-explorer-operation-scrollbar__thumb:hover {
+    opacity: 0.82;
+    background: var(--ws-editor-scrollbarSlider-hoverBackground);
+}
+
+.file-explorer-operation-scrollbar__thumb:active {
+    opacity: 0.96;
+    background: var(--ws-editor-scrollbarSlider-activeBackground);
+}
+
+.file-explorer-operation-status {
+    margin: 0;
+    padding: 12px 8px;
+    color: var(--ws-descriptionForeground);
+}
+
+.file-explorer-operation-list__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 26px;
+    border-radius: 3px;
+    padding-left: calc(4px + (var(--file-explorer-move-depth) * 14px));
+    color: inherit;
+    background: transparent;
+}
+
+.file-explorer-operation-list__item:hover {
+    background: var(--ws-menu-hoverBackground);
+}
+
+.file-explorer-operation-list__item.is-active {
+    background: var(--ws-list-activeSelectionBackground);
+}
+
+.file-explorer-operation-list__item.is-disabled {
+    color: var(--ws-descriptionForeground);
+}
+
+.file-explorer-operation-list__toggle {
+    display: inline-flex;
+    width: 20px;
+    height: 26px;
+    flex: 0 0 20px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    color: var(--ws-icon-foreground);
+    background: transparent;
+    cursor: pointer;
+}
+
+.file-explorer-operation-list__toggle:disabled {
+    cursor: default;
+}
+
+.file-explorer-operation-list__toggle .file-explorer-icon {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
+}
+
+.file-explorer-operation-list__target {
+    display: flex;
+    min-width: 0;
+    min-height: 26px;
+    flex: 1;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 3px 8px 3px 2px;
+    color: inherit;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+}
+
+.file-explorer-operation-list__target:disabled {
+    cursor: default;
+}
+
+.file-explorer-operation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.file-explorer-operation-hints {
+    display: flex;
+    gap: 12px;
+    margin-right: auto;
+    align-self: center;
+    color: var(--ws-descriptionForeground);
+    font-size: 11px;
+}
+
+.file-explorer-operation-actions button {
+    min-width: 56px;
+    min-height: 26px;
+    border: 1px solid var(--ws-menu-border);
+    border-radius: 3px;
+    padding: 3px 9px;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+}
+
+.file-explorer-operation-actions button:hover:not(:disabled) {
+    background: var(--ws-menu-hoverBackground);
+}
+
+.file-explorer-operation-actions button:disabled {
+    color: var(--ws-descriptionForeground);
+    cursor: default;
+}
+
+.file-explorer-sort-menu {
+    min-width: 224px;
+    box-sizing: border-box;
+}
+
+.file-explorer-sort-menu__item {
+    text-align: left;
+}
+
+.file-explorer-sort-menu__separator {
+    margin: 4px 0;
+}

@@ -1,0 +1,9 @@
+// 统一禁止非编辑内容被浏览器文本拖选，目标元素只需添加该工具类。
+@mixin no-text-selection {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ws-no-text-selection {
+  @include no-text-selection;
+}

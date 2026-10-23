@@ -1,0 +1,137 @@
+// 文件说明：定义直接挂载到 CodeMirror 官方 Widget DOM 的音频块样式
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/mixins' as *;
+@use '@editor/Block/editorBlock' as editor-block;
+@use '@editor/MediaBlock/mediaSource' as media-source;
+
+@mixin styles {
+  @include media-source.source-link('cm-editor-audio-block');
+
+  :deep(.cm-editor-audio-block) {
+    @include editor-block.root;
+    background: transparent;
+    width: min(100%, $editor-audio-block-max-width);
+    min-width: $editor-audio-block-min-width;
+    min-height: $editor-audio-block-min-height;
+    padding-top: $editor-media-block-top-padding;
+    padding-right: $editor-audio-block-actions-padding-right;
+    padding-bottom: $editor-block-gap;
+    overflow: hidden;
+  }
+
+  :deep(.cm-editor-audio-block::before) {
+    position: absolute;
+    inset: $editor-media-block-top-padding 0 $editor-block-gap;
+    z-index: 0;
+    border: $editor-audio-block-border-width solid var(--ws-audioBlock-border);
+    border-radius: $radius-xs;
+    background: var(--ws-audioBlock-background);
+    box-sizing: border-box;
+    content: '';
+    pointer-events: none;
+  }
+
+  :deep(.cm-editor-audio-block[data-editor-block-state='selected']::after),
+  :deep(.cm-editor-audio-block[data-editor-block-state='editing']::after) {
+    @include editor-block.selection-outline(
+      $editor-media-block-top-padding 0 $editor-block-gap
+    );
+  }
+
+  :deep(.cm-editor-audio-block__audio) {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: $editor-audio-block-min-height;
+    margin: 0 auto;
+    border-radius: $radius-none;
+    background: transparent;
+    color: var(--ws-foreground);
+    accent-color: var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-enclosure),
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-panel) {
+    border-radius: $radius-none;
+    background: transparent !important;
+    color: var(--ws-foreground) !important;
+  }
+
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-current-time-display),
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-time-remaining-display) {
+    color: var(--ws-foreground) !important;
+  }
+
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-timeline),
+  :deep(.cm-editor-audio-block__audio::-webkit-media-controls-volume-slider) {
+    accent-color: var(--ws-focusBorder);
+  }
+
+  :deep(.cm-editor-audio-block__actions) {
+    position: absolute;
+    z-index: $editor-block-action-z-index;
+    top: 50%;
+    right: 0;
+    width: $editor-block-action-size + $editor-block-action-offset;
+    height: 100%;
+    padding-right: $editor-block-action-offset;
+    box-sizing: border-box;
+    cursor: pointer;
+    justify-content: flex-end;
+    transform: translateY(-50%);
+  }
+
+  // 保留右侧操作栏的透明命中区，避免未选中时鼠标无法触发显示。
+  :deep(.cm-editor-audio-block .cm-editor-audio-block__actions) {
+    opacity: 0;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  :deep(.cm-editor-audio-block__audio:hover ~ .cm-editor-audio-block__actions),
+  :deep(.cm-editor-audio-block__actions:hover) {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  :deep(.cm-editor-audio-block__actions .cm-editor-audio-block__edit) {
+    pointer-events: auto;
+  }
+
+  :deep(.cm-editor-audio-block__edit) {
+    @include editor-block.action-button;
+  }
+
+  :deep(.cm-editor-audio-block__edit:hover) {
+    color: var(--ws-button-hoverForeground);
+  }
+
+  :deep(.cm-editor-audio-block__edit:focus-visible) {
+    @include editor-block.action-button-focus;
+  }
+
+  :deep(.cm-editor-audio-block__edit-icon) {
+    @include editor-block.action-icon;
+  }
+
+  :deep(.cm-editor-audio-block__error) {
+    position: relative;
+    z-index: 1;
+    display: none;
+    min-height: $editor-audio-block-min-height;
+    color: var(--ws-descriptionForeground);
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+
+  :deep(.cm-editor-audio-block[data-audio-state='error'] .cm-editor-audio-block__audio) {
+    display: none;
+  }
+
+  :deep(.cm-editor-audio-block[data-audio-state='error'] .cm-editor-audio-block__error) {
+    @include flex-center;
+  }
+}

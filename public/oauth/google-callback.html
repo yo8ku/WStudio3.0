@@ -1,0 +1,134 @@
+<!doctype html>
+<!-- 文件说明：展示 Google 授权完成后的 WStudio deep-link 中转页。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>启动 WStudio</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+
+      main {
+        width: min(100% - 48px, 560px);
+        padding: 48px 24px 40px;
+        text-align: center;
+      }
+
+      .logo {
+        display: block;
+        width: 112px;
+        height: 112px;
+        margin: 0 auto 28px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 18px rgb(0 122 204 / 0.24));
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(24px, 5vw, 32px);
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      .description {
+        margin: 14px 0 0;
+        color: #999999;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .fallback {
+        margin: 42px 0 0;
+        color: #999999;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .fallback a {
+        color: #3794ff;
+        text-decoration: none;
+      }
+
+      .fallback a:hover,
+      .fallback a:focus-visible {
+        color: #75beff;
+        text-decoration: underline;
+      }
+
+      .fallback--error {
+        color: #f48771;
+      }
+
+      @media (max-width: 480px) {
+        main {
+          width: min(100% - 32px, 560px);
+          padding-inline: 16px;
+        }
+
+        .logo {
+          width: 96px;
+          height: 96px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main aria-labelledby="title">
+      <img class="logo" src="../wslog2.png" alt="WStudio">
+      <h1 id="title">启动 WStudio</h1>
+      <p class="description">您将在稍后被重定向。</p>
+      <p class="fallback" id="fallback">
+        如果没有任何反应，<a id="open-link" href="#">请在浏览器中打开此链接</a>。
+      </p>
+    </main>
+
+    <script>
+      // 只允许当前应用的回调 deep-link，避免把页面用作任意 URL 跳转器。
+      function parseRedirect(value) {
+        if (!value) return '';
+        try {
+          const url = new URL(value);
+          if (url.protocol !== 'wstudio:'
+            || url.hostname !== 'auth'
+            || url.pathname !== '/callback'
+            || url.username
+            || url.password
+            || url.port
+            || url.hash) {
+            return '';
+          }
+          return url.href;
+        } catch {
+          return '';
+        }
+      }
+
+      const redirect = parseRedirect(new URLSearchParams(window.location.search).get('redirect'));
+      const link = document.getElementById('open-link');
+      const fallback = document.getElementById('fallback');
+
+      if (redirect && link && fallback) {
+        link.href = redirect;
+        window.setTimeout(() => window.location.replace(redirect), 700);
+      } else if (fallback) {
+        fallback.classList.add('fallback--error');
+        fallback.textContent = '授权链接无效，请返回 WStudio 重试。';
+      }
+    </script>
+  </body>
+</html>

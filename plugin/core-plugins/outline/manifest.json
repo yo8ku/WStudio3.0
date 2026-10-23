@@ -1,0 +1,44 @@
+{
+  "$schema": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "id": "com.wstudio.outline",
+  "name": "大纲",
+  "version": "1.0.5",
+  "description": "显示当前 Markdown 文档的标题层级并提供编辑器定位。",
+  "author": {
+    "name": "WStudio"
+  },
+  "icon": "assets/outline.svg",
+  "license": "MIT",
+  "minAppVersion": "0.1.0",
+  "apiVersion": "1.0",
+  "main": "main.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "permissions": [
+    {
+      "id": "editor.read",
+      "reason": "读取当前活动 Markdown 文档与选区以生成大纲。",
+      "scope": ["**"]
+    },
+    {
+      "id": "editor.write",
+      "reason": "点击大纲标题时在当前编辑器中定位对应文本范围。",
+      "scope": ["**"]
+    }
+  ],
+  "contributes": {
+    "commands": [],
+    "views": [
+      {
+        "type": "com.wstudio.outline.document",
+        "title": "大纲",
+        "region": "right-sidebar",
+        "multiple": false,
+        "openOnStartup": true
+      }
+    ],
+    "settings": [],
+    "statusBar": []
+  }
+}

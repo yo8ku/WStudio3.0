@@ -1,0 +1,383 @@
+// 文件说明：定义全局尺寸、间距以及工作台运行时变量的 SCSS
+@use 'sass:math';
+
+$error-color: #c55858;
+
+
+//$font-family-base: "Microsoft YaHei", system-ui, "-apple-system";
+$font-family-base: "system-ui","sans-serif";
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-08: 0.8rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.5rem;
+$font-editor-context-menu-font-size: 0.79rem;
+
+$font-size-tableTh:0.95rem;
+
+$spacing-3xs: 0.125rem;
+$spacing-none: 0rem;
+$spacing-2xs: 0.25rem;
+$spacing-04rem: 0.4rem;
+$spacing-xs: 0.5rem;
+$spacing-sm: 0.75rem;
+$spacing-085: 0.85rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-03rem: 0.3rem;
+
+$icon-size-width: 1rem;
+$icon-size-height: 1rem;
+$switch-track-width: 2.375rem;
+$switch-track-height: 1.25rem;
+$switch-track-padding: $spacing-2xs;
+$switch-thumb-size: $spacing-md;
+
+$radius-none: $spacing-none;
+$radius-xs: 0.25rem;
+$radius-2px: 0.125rem;
+$radius-3px: 0.2rem;
+$radius-3rem: 0.3rem;
+$radius-5rem:0.5rem;
+$editor-table-border-width: 0.0625rem;
+$input-border-width: $editor-table-border-width;
+$input-border-radius: $radius-xs;
+$input-control-min-height: 1.75rem;
+$input-padding-inline: $spacing-xs;
+$input-padding-block: $spacing-3xs;
+$editor-table-header-font-weight: 600;
+$editor-table-cell-min-width: 4rem;
+$editor-table-row-min-height: 1.1rem;
+$editor-table-picker-cell-size: $spacing-md;
+$editor-table-picker-cell-gap: $spacing-3xs;
+
+$activity-bar-width: 4.5rem;
+$account-avatar-size: 1.5rem;
+$account-menu-width: 15rem;
+$account-menu-max-width: 24rem;
+$title-bar-height: 2rem;
+$project-color-swatch-size: $spacing-sm;
+$project-color-gradient-width: 48rem;
+$project-color-gradient-height: 16rem;
+$project-color-gradient-peak-stop: 9.5rem;
+$project-color-gradient-peak-opacity: 0.26;
+$project-color-gradient-end-opacity: 0;
+$project-color-picker-width: 19rem;
+$project-color-picker-arrow-width: $spacing-085;
+$project-color-picker-arrow-height: 0.65rem;
+$project-color-picker-content-padding: $spacing-sm;
+$project-color-picker-section-gap: $spacing-sm;
+$project-color-picker-input-gap: $spacing-2xs;
+$project-color-picker-input-height: 2rem;
+$project-color-picker-swatch-size: $spacing-md;
+
+
+//dialog弹窗
+$workbench-dialog-width: 25rem;
+$workbench-dialog-imgSize-width:20rem;
+
+$login-dialog-logo-size: 5rem;
+$ai-model-check-dialog-width: 26rem;
+$workbench-dialog-list-height: 16rem;
+$project-color-picker-selected-swatch-border-width: 0.125rem;
+$project-color-picker-swatch-row-gap: $spacing-xs;
+$project-color-picker-swatch-columns: 10;
+$project-color-amber: #e2855c;
+$project-color-olive: #9CA459;
+$project-color-grass-green: #58A86C;
+$project-color-sea-blue: #24A19E;
+$project-color-sky-blue: #448EC5;
+$project-color-cobalt-blue: #4670F0;
+$project-color-purple: #9757E0;
+$project-color-magenta: #C04F9F;
+
+$icon-rail-width: 2.75rem;
+$icon-rail-tab-height: 1.56rem;
+
+$editor-header-action-gap: $spacing-2xs;
+$editor-header-action-width: $icon-rail-tab-height;
+$editor-header-action-height: $icon-rail-tab-height - $spacing-2xs;
+$window-control-size: 1.5rem;
+
+$status-bar-height: 2rem;
+$status-bar-notification-badge-size: $font-size-sm;
+$workbench-dialog-line-height: 1.5;
+$title-bar-context-menu-min-width: 13rem;
+$command-center-panel-width: 36rem;
+$command-center-panel-max-height: 26rem;
+$command-center-overlay-z-index: 20;
+$notification-max-width: 28rem;
+$notification-z-index: 1000;
+$notification-icon-size: $font-size-lg;
+$notification-close-icon-size: $font-size-md;
+$command-center-top-offset: 0;
+$command-center-search-height: 1.8rem;
+$command-center-item-height: 1.3rem;
+$command-center-last-item-margin-bottom: 0.375rem;
+$settings-dialog-window-width: min(100%, 100vh);
+$settings-dialog-height: 78vh;
+$settings-dialog-title-height: 2.5rem;
+$settings-dialog-close-icon-size: 1.1rem;
+$settings-dialog-navigation-width: 11rem;
+$settings-dialog-navigation-compact-width: 8rem;
+$settings-dialog-navigation-item-height: 1.6rem;
+$settings-dialog-navigation-section-gap: 1.5rem;
+$settings-dialog-navigation-overlay-opacity: 0;
+$settings-option-list-border-width: $editor-table-border-width;
+$settings-option-list-radius: $radius-xs;
+$settings-option-row-min-height: 3.75rem;
+$settings-option-detail-padding-inline-start: $spacing-xl;
+$settings-option-control-gap: $spacing-sm;
+$settings-option-control-width: 14rem;
+$settings-option-compact-control-width: 8rem;
+$settings-option-value-max-width: 18rem;
+$settings-option-mobile-breakpoint: 48rem;
+$settings-plugin-search-height: 1.75rem;
+$settings-plugin-action-size: $settings-plugin-search-height;
+$settings-plugin-action-icon-size: $font-size-md;
+$ai-model-group-selector-min-width: 5.5rem;
+$settings-shortcut-filter-menu-width: 8rem;
+$settings-shortcut-action-column-width: 3%;
+$settings-shortcut-command-column-width: 35%;
+$settings-shortcut-keybinding-column-width: 35%;
+$settings-shortcut-source-column-width: 27%;
+$workbench-list-picker-item-min-height: 1.5rem;
+$scrollbar-hit-width: $spacing-xs;
+$scrollbar-thumb-width: 0.7125rem;
+$scrollbar-horizontal-thumb-height: 0.1875rem;
+$scrollbar-thumb-min-height: $spacing-xl;
+$scrollbar-fade-duration: 0.48s;
+$scrollbar-fade-out-delay: 0.24s;
+$scrollbar-fade-easing: cubic-bezier(0.22, 1, 0.36, 1);
+$scrollbar-thumb-idle-opacity: 0;
+$scrollbar-thumb-opacity: 0.5;
+$scrollbar-thumb-hover-opacity: 0.82;
+$scrollbar-thumb-active-opacity: 0.96;
+
+
+//图标按钮
+$button-width:1.5rem;
+$button-height:1.5rem;
+
+
+
+// 通用日期选择器
+$ws-date-picker-cell-size: 1.75rem;
+$ws-date-picker-day-button-size: 1.5rem;
+$ws-date-picker-control-height: $ws-date-picker-day-button-size;
+$ws-date-picker-controls-padding-top: $spacing-2xs + $spacing-3xs;
+$ws-date-picker-months-row-count: 6;
+$ws-date-picker-months-gap: $spacing-2xs;
+$ws-date-picker-month-button-width: $ws-date-picker-cell-size * 2;
+$ws-date-picker-month-button-height: $ws-date-picker-cell-size;
+$ws-date-picker-year-button-width: $ws-date-picker-cell-size * 2;
+$ws-date-picker-months-height:
+  ($ws-date-picker-month-button-height * $ws-date-picker-months-row-count)
+  + ($ws-date-picker-months-gap * ($ws-date-picker-months-row-count - 1));
+$ws-date-picker-width: ($ws-date-picker-cell-size * 7) + ($spacing-2xs * 8);
+$ws-date-picker-action-button-width: $ws-date-picker-day-button-size * 2;
+$ws-date-picker-time-panel-width: $ws-date-picker-cell-size * 4;
+$ws-date-picker-time-column-width: math.div($ws-date-picker-time-panel-width, 2);
+$ws-date-picker-time-option-width: $ws-date-picker-day-button-size;
+$ws-date-picker-time-header-height: $ws-date-picker-control-height + $ws-date-picker-controls-padding-top;
+$ws-date-picker-time-item-height: $ws-date-picker-day-button-size;
+$docking-group-header-height: 2rem;
+$docking-three-group-tabs-fontSize:$font-size-sm;
+$docking-tab-padding-x: $spacing-sm;
+$docking-tab-min-width: 5.5rem;
+$docking-web-tab-max-width: 16rem;
+$docking-splitter-size: $editor-table-border-width;
+$docking-splitter-active-size: $spacing-2xs;
+$docking-splitter-hit-size: $spacing-md;
+$docking-splitter-hover-duration: 0.15s;
+$docking-splitter-hover-delay: 0.32s;
+$docking-preview-outline-width: 1px;
+$dock-preview-header-height: 2rem;
+$tooltip-height: 1.5625rem;
+$tooltip-line-height: 1.25;
+$tooltip-padding-y: $spacing-2xs;
+$tooltip-padding-x: $spacing-sm;
+$tooltip-arrow-size: 0.3125rem;
+$editor-footnote-panel-min-width: 18rem;
+$editor-footnote-panel-max-width: 28rem;
+$editor-footnote-option-height: 1.75rem;
+$editor-footnote-visible-options: 8;
+$editor-footnote-enter-icon-size: $font-size-sm;
+$editor-footnote-enter-icon-gap: $spacing-2xs;
+$editor-footnote-enter-icon-align: -0.125em;
+$editor-footnote-enter-icon-opacity: 0.6;
+$editor-footnote-enter-icon-hover-opacity: 1;
+$editor-footnote-enter-icon-hover-brightness: 1.15;
+$editor-footnote-enter-icon-hover-duration: 0.15s;
+$editor-footnote-enter-icon-underline-width: 1px;
+$editor-footnote-reference-panel-min-width: 16rem;
+$editor-footnote-reference-panel-max-width: 24rem;
+$editor-footnote-reference-item-height: 1.75rem;
+$editor-footnote-reference-visible-items: 8;
+$editor-footnote-reference-font-size: 0.9em;
+$editor-footnote-reference-line-height: 1;
+$editor-footnote-reference-padding-x: $spacing-2xs;
+$editor-footnote-reference-radius: $radius-2px;
+$editor-footnote-reference-offset-y: 0.08em;
+$editor-wiki-link-panel-min-width: 18rem;
+$editor-wiki-link-panel-max-width: 28rem;
+$editor-wiki-link-option-height: 1.75rem;
+$editor-wiki-link-visible-options: 8;
+$editor-wiki-link-detail-opacity: 0.72;
+$editor-wiki-link-embed-min-height: 35rem;
+$editor-wiki-link-embed-max-height: 100rem;
+$editor-gutter-fontSize:0.8rem;
+$editor-content-padding-inline-end: 1.25rem;
+$editor-line-number-gutter-padding-inline-start: 1.25rem;
+$editor-line-number-gutter-padding-inline-end: 0.1875rem;
+$editor-font-size: 0.9rem;
+$editor-line-height: 1.6;
+$editor-line-height-size: $editor-font-size * $editor-line-height;
+$editor-html-block-width: 100%;
+$editor-cursor-width: 2px;
+$editor-horizontal-rule-position: 50%;
+$editor-horizontal-rule-width: 1px;
+
+$editor-quote-line-width: 2px;
+$editor-quote-content-padding-inline: $spacing-xs;
+$editor-delete-line-width: 1px;
+$editor-highlight-padding-x: 0.0625rem;
+$editor-highlight-radius: $radius-2px;
+$editor-inline-code-padding-x: 0.125rem;
+$editor-inline-code-radius: $radius-2px;
+$editor-link-preview-width: 26rem;
+$editor-link-preview-max-width: 80vw;
+$editor-link-preview-max-height: 22rem;
+$editor-link-preview-action-size: 1.5rem;
+$editor-link-preview-action-icon-size: 1rem;
+$editor-task-list-checkbox-size: 0.875rem;
+$editor-task-list-checkbox-border-width: 1px;
+$editor-task-list-checkbox-radius: $radius-2px;
+$editor-task-list-checkbox-align: top;
+$editor-task-list-check-inset-inline: 0.25rem;
+$editor-task-list-check-inset-block: 0.0625rem;
+$editor-task-list-check-width: 0.25rem;
+$editor-task-list-check-height: 0.5rem;
+$editor-task-list-check-border-width: 0.125rem;
+$editor-strong-font-size: 1rem;
+$editor-strong-font-weight: 900;
+$editor-block-border-width: 1px;
+$editor-block-action-size: $editor-header-action-height;
+$editor-block-action-icon-size: $font-size-lg;
+$editor-block-action-offset: $spacing-sm;
+$editor-block-action-z-index: 2;
+$editor-block-overlay-z-index: 201;
+$editor-table-floating-handle-z-index: 201;
+$editor-block-gap: $spacing-xs;
+$editor-admonition-border-width: 1px;
+$editor-admonition-header-height: 2.25rem;
+$editor-admonition-header-padding-inline: 0.8rem;
+$editor-admonition-header-padding-block: 0.3rem;
+$editor-admonition-title-weight: 600;
+$editor-media-block-top-padding: math.div(
+  $editor-line-height-size - $editor-gutter-fontSize,
+  2
+);
+$editor-image-block-content-max-height: 24rem;
+$editor-image-block-min-height: 8rem;
+$editor-mermaid-block-min-height: 8rem;
+$editor-image-block-resize-handle-size: $spacing-sm;
+$editor-mermaid-actions-padding-right: 1.5625rem;
+$editor-video-block-content-max-height: 24rem;
+$editor-video-block-min-width: 14rem;
+$editor-video-block-min-height: 8rem;
+$editor-audio-block-max-width: 40rem;
+$editor-audio-block-min-width: 18rem;
+$editor-audio-block-min-height: 3rem;
+$editor-audio-block-border-width: $editor-table-border-width;
+$editor-audio-block-actions-padding-right: 1.5rem;
+$editor-mermaid-zoom-slider-width: 6rem;
+$breadcrumbs-height: 1.75rem;
+$breadcrumbs-padding-x: $spacing-sm;
+$breadcrumbs-font-size: $font-size-xs;
+$breadcrumbs-divider-size: $font-size-sm;
+$breadcrumbs-menu-width: 240px;
+$breadcrumbs-menu-max-height: 30rem;
+$editor-heading-line-height: 1.25;
+$editor-heading-font-weight: 700;
+$editor-heading-prefix-gap: -0.3rem;
+$editor-heading-size: 1.25rem;
+$editor-context-menu-min-width: 11rem;
+$editor-context-menu-item-height: 1.5rem;
+$editor-context-menu-padding-y: $spacing-2xs;
+$editor-context-menu-arrow-size: 0.9rem;
+$menu-surface-background: var(--ws-menu-background);
+$menu-content-background: transparent;
+$menu-shadow-color: rgb(0 0 0 / 0.18);
+$menu-box-shadow: 0 $spacing-2xs $spacing-sm $menu-shadow-color;
+$menu-compact-spacing: 0.3125rem;
+$compact-control-padding: 0.1875rem;
+$dropdown-menu-panel-min-width: $editor-context-menu-min-width;
+$dropdown-menu-trigger-max-width: 20rem;
+$dropdown-menu-item-radius: $radius-xs;
+$dropdown-menu-item-height: 1.5rem;
+$dropdown-menu-item-padding-inline: 0.4375rem;
+$dropdown-menu-item-padding-block: 0.3125rem;
+$dropdown-menu-padding-block: $spacing-2xs;
+$dropdown-menu-active-z-index: 3000;
+$workbench-context-menu-z-index: 11000;
+$inline-chat-at-menu-max-height: 20rem;
+$inline-chat-content-width: 85%;
+$inline-chat-model-max-width: 16rem;
+$select-surface-radius: $radius-3px;
+$select-item-radius: $radius-xs;
+$select-trigger-height: 1.8rem;
+$select-trigger-padding-inline: 0.3125rem;
+$select-trigger-font-size: 0.8rem;
+$select-trigger-arrow-size: 0.8125rem;
+
+
+$select-disabled-opacity: 0.5;
+$select-font-size: $font-editor-context-menu-font-size;
+$select-menu-item-height: 1.5rem;
+$select-menu-item-padding-inline: 0.4375rem;
+$select-menu-item-padding-block: 0.3125rem;
+$select-menu-padding-block: $spacing-2xs;
+$select-icon-size: $font-size-sm;
+$select-scrollbar-width: $scrollbar-hit-width;
+$select-scrollbar-thumb-min-height: $scrollbar-thumb-min-height;
+$select-menu-active-z-index: 3000;
+$note-properties-padding-block: $spacing-xs;
+$note-properties-row-gap: $spacing-3xs;
+$note-properties-header-height: 1.5rem;
+$note-properties-title-font-size: $font-size-md;
+$note-properties-content-font-size: 0.85rem;
+$note-properties-row-height: 1.75rem;
+$note-properties-row-padding: $spacing-2xs;
+$note-properties-row-icon-inset: $spacing-3xs;
+$note-properties-icon-size: $icon-size-width;
+$note-properties-chip-gap: $spacing-2xs;
+$note-properties-chip-border-width: 0.15rem;
+$note-properties-child-indent: $note-properties-icon-size + $note-properties-chip-gap;
+$note-properties-leading-content-offset: $note-properties-row-padding
+  + $note-properties-child-indent
+  + $input-border-width;
+$note-properties-title-content-offset: $note-properties-leading-content-offset
+  - $spacing-xs;
+$note-properties-row-border-offset: 1.4rem;
+$note-properties-fold-control-offset: $note-properties-title-content-offset
+  - $note-properties-icon-size
+  + $spacing-3xs;
+$note-properties-label-width: 7rem;
+$note-properties-value-height: 1.5rem;
+$note-properties-chip-radius: math.div($note-properties-value-height, 2);
+$note-properties-text-line-height: 1.25rem;
+$note-properties-text-padding-block: math.div(
+  $note-properties-value-height - $note-properties-text-line-height,
+  2
+);
+$note-properties-close-icon-size: $font-size-xs;
+$note-properties-input-min-width: 6rem;
+$note-properties-date-content-width: $note-properties-input-min-width;
+$note-properties-datetime-content-width: 13rem;
+$note-properties-date-control-width: $note-properties-date-content-width + ($note-properties-icon-size * 2) + ($note-properties-chip-gap * 2);
+$note-properties-datetime-control-width: $note-properties-datetime-content-width + $note-properties-icon-size + $note-properties-chip-gap;
+$note-properties-menu-min-width: 10rem;
+$note-properties-menu-icon-column-width: 1.5rem;

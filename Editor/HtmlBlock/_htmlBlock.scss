@@ -1,0 +1,27 @@
+/**
+ * 文件说明：隔离 HTML 可视化块与 CodeMirror 行布局，确保安全内联样式按浏览器盒模型渲染。
+ */
+@use '@/assets/styles/variables' as variables;
+
+:deep(.cm-editor-html-block) {
+  display: flow-root;
+  width: variables.$editor-html-block-width;
+  overflow: visible;
+  line-height: normal;
+  white-space: normal;
+  cursor: text;
+
+  > * {
+    display: block;
+  }
+
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+:deep(.cm-editor-html-block--inline) {
+  display: inline-block;
+  vertical-align: top;
+}

@@ -1,0 +1,166 @@
+/**
+ * 文件说明：定义 Markdown 行内链接 Ctrl 悬停章节预览面板样式。
+ */
+@use '@/assets/styles/variables' as variables;
+@use '@/assets/styles/mixins' as mixins;
+
+:global(.cm-markdown-inline-link-preview) {
+  --workbench-scrollbar-hit-width: #{variables.$scrollbar-hit-width};
+  --workbench-scrollbar-thumb-width: #{variables.$scrollbar-thumb-width};
+  --workbench-scrollbar-thumb-min-height: #{variables.$scrollbar-thumb-min-height};
+  --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+  --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+  --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+  position: relative;
+  width: variables.$editor-link-preview-width;
+  max-width: variables.$editor-link-preview-max-width;
+  border: variables.$editor-block-border-width solid var(--ws-border);
+  border-radius: variables.$radius-xs;
+  color: var(--ws-foreground);
+  background: var(--ws-menu-background);
+  line-height: variables.$tooltip-line-height;
+  overflow: hidden;
+}
+
+:global(.cm-markdown-inline-link-preview__scroller) {
+  max-height: variables.$editor-link-preview-max-height;
+  padding: variables.$spacing-md;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+:global(.cm-markdown-inline-link-preview__scroller::-webkit-scrollbar) {
+  display: none;
+}
+
+:global(.cm-markdown-inline-link-preview__header) {
+  @include mixins.flex-between;
+  gap: variables.$spacing-sm;
+  margin-bottom: variables.$spacing-sm;
+  padding-bottom: variables.$spacing-xs;
+  border-bottom: variables.$editor-block-border-width solid var(--ws-border);
+}
+
+:global(.cm-markdown-inline-link-preview__title) {
+  margin: 0;
+  color: var(--ws-editor-heading-foreground);
+  font-size: variables.$font-size-lg;
+}
+
+:global(.cm-markdown-inline-link-preview__navigate) {
+  @include mixins.flex-center;
+  flex: none;
+  width: variables.$editor-link-preview-action-size;
+  height: variables.$editor-link-preview-action-size;
+  padding: 0;
+  border: 0;
+  border-radius: variables.$radius-xs;
+  background: transparent;
+  cursor: pointer;
+}
+
+:global(.cm-markdown-inline-link-preview__navigate:hover) {
+  background: var(--ws-button-hoverBackground);
+}
+
+:global(.cm-markdown-inline-link-preview__navigate-icon) {
+  display: inline-block;
+  width: variables.$editor-link-preview-action-icon-size;
+  height: variables.$editor-link-preview-action-icon-size;
+  color: var(--ws-foreground);
+  font-family: 'Untitled';
+  font-size: variables.$editor-link-preview-action-icon-size;
+  line-height: 1;
+}
+
+:global(.cm-markdown-inline-link-preview__navigate-icon::before) {
+  content: '\f05d';
+}
+
+:global(.cm-markdown-inline-link-preview__content) {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+
+:global(.cm-markdown-inline-link-preview__content > :first-child) {
+  margin-top: 0;
+}
+
+:global(.cm-markdown-inline-link-preview__content > :last-child) {
+  margin-bottom: 0;
+}
+
+:global(.cm-markdown-inline-link-preview__content p) {
+  margin: 0 0 variables.$spacing-sm;
+}
+
+:global(.cm-markdown-inline-link-preview__content h1),
+:global(.cm-markdown-inline-link-preview__content h2),
+:global(.cm-markdown-inline-link-preview__content h3),
+:global(.cm-markdown-inline-link-preview__content h4),
+:global(.cm-markdown-inline-link-preview__content h5),
+:global(.cm-markdown-inline-link-preview__content h6) {
+  margin: variables.$spacing-md 0 variables.$spacing-sm;
+  color: var(--ws-editor-heading-foreground);
+  font-size: variables.$font-size-md;
+}
+
+:global(.cm-markdown-inline-link-preview__content strong) {
+  color: var(--ws-editor-strongForeground);
+  font-weight: variables.$editor-strong-font-weight;
+}
+
+:global(.cm-markdown-inline-link-preview__content em) {
+  color: var(--ws-editor-italicForeground);
+  font-style: italic;
+}
+
+:global(.cm-markdown-inline-link-preview__content del) {
+  color: var(--ws-editor-deleteForeground);
+  text-decoration-thickness: variables.$editor-delete-line-width;
+}
+
+:global(.cm-markdown-inline-link-preview__content code) {
+  padding: 0 variables.$editor-inline-code-padding-x;
+  border-radius: variables.$editor-inline-code-radius;
+  color: var(--ws-editor-inlineCodeForeground);
+  background: var(--ws-editor-inlineCodeBackground);
+}
+
+:global(.cm-markdown-inline-link-preview__content pre) {
+  margin: 0 0 variables.$spacing-sm;
+  padding: variables.$spacing-sm;
+  overflow-x: auto;
+  border-radius: variables.$radius-xs;
+  background: var(--ws-editor-inlineCodeBackground);
+}
+
+:global(.cm-markdown-inline-link-preview__content pre code) {
+  padding: 0;
+  background: transparent;
+}
+
+:global(.cm-markdown-inline-link-preview__content blockquote) {
+  margin: 0 0 variables.$spacing-sm;
+  padding: variables.$spacing-xs variables.$spacing-sm;
+  border-left: variables.$editor-quote-line-width solid var(--ws-markdown-quoteForeground);
+  color: var(--ws-markdown-quoteTextForeground);
+  background: var(--ws-markdown-quoteBackground);
+}
+
+:global(.cm-markdown-inline-link-preview__content ul),
+:global(.cm-markdown-inline-link-preview__content ol) {
+  margin: 0 0 variables.$spacing-sm;
+  padding-left: variables.$spacing-lg;
+}
+
+:global(.cm-markdown-inline-link-preview__content a) {
+  color: var(--ws-editor-linkForeground);
+}
+
+:global(.cm-markdown-inline-link-preview--missing) {
+  padding: variables.$spacing-md;
+  color: var(--ws-danger-background);
+}

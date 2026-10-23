@@ -1,0 +1,374 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "title": "WStudio Plugin Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "version",
+    "description",
+    "author",
+    "minAppVersion",
+    "apiVersion",
+    "main",
+    "activationEvents",
+    "permissions",
+    "contributes"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri-reference" },
+    "id": { "$ref": "#/$defs/pluginId" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "version": { "$ref": "#/$defs/semver" },
+    "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "author": { "$ref": "#/$defs/author" },
+    "license": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "icon": { "$ref": "#/$defs/relativePath" },
+    "keywords": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 40 }
+    },
+    "minAppVersion": { "$ref": "#/$defs/semver" },
+    "apiVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "main": { "const": "main.js" },
+    "sidecar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "executable"],
+      "properties": {
+        "type": { "const": "sidecar" },
+        "executable": { "$ref": "#/$defs/sidecarExecutable" },
+        "args": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "type": "string", "maxLength": 512 }
+        }
+      }
+    },
+    "activationEvents": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/activationEvent" }
+    },
+    "permissions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/permission" }
+    },
+    "contributes": { "$ref": "#/$defs/contributions" }
+  },
+  "$defs": {
+    "pluginId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 120
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?![\\\\/])(?:[A-Za-z0-9._-]+[\\\\/])*[A-Za-z0-9._-]+$"
+    },
+    "javascriptPath": {
+      "allOf": [
+        { "$ref": "#/$defs/relativePath" },
+        { "pattern": "\\.js$" }
+      ]
+    },
+    "sidecarExecutable": {
+      "allOf": [
+        { "$ref": "#/$defs/relativePath" },
+        { "not": { "pattern": "(^|[\\\\/])\\.\\.([\\\\/]|$)" } },
+        { "not": { "pattern": "(^|[\\\\/])\\.([\\\\/]|$)" } }
+      ]
+    },
+    "activationEvent": {
+      "type": "string",
+      "pattern": "^(onStartupFinished|onCommand:[a-z0-9]+(?:[.-][a-z0-9]+)*|onView:[a-z0-9]+(?:[.-][a-z0-9]+)*|onLanguage:[A-Za-z0-9._+-]+|workspaceContains:.+)$"
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reason"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "workspace.read",
+            "workspace.write",
+            "workspace.open",
+            "window.manage",
+            "network.request",
+            "clipboard.read",
+            "clipboard.write",
+            "notifications.show",
+            "notifications.system",
+            "dialogs.show",
+            "external.open",
+            "webViewer.navigate",
+            "storage.plugin",
+            "editor.read",
+            "editor.write",
+            "renderer.code",
+            "node.fs",
+            "node.process",
+            "node.native",
+            "electron.system"
+          ]
+        },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "scope": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+        }
+      }
+    },
+    "contributions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commands", "views", "settings", "statusBar"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/command" }
+        },
+        "views": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/view" }
+        },
+        "settings": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/setting" }
+        },
+        "statusBar": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/statusBar" }
+        }
+      }
+    },
+    "namespacedId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 160
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "$ref": "#/$defs/namespacedId" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 300 }
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "title"],
+      "properties": {
+        "type": { "$ref": "#/$defs/namespacedId" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "region": {
+          "enum": ["left-sidebar", "editor", "right-sidebar", "bottom"]
+        },
+        "multiple": { "type": "boolean" },
+        "openOnStartup": { "type": "boolean" },
+        "capabilities": { "type": "array", "uniqueItems": true, "items": { "enum": ["webViewer"] } }
+      }
+    },
+    "setting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "$ref": "#/$defs/namespacedId" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/settingField" }
+        }
+      }
+    },
+    "settingField": {
+      "oneOf": [
+        { "$ref": "#/$defs/textSettingField" },
+        { "$ref": "#/$defs/numberSettingField" },
+        { "$ref": "#/$defs/booleanSettingField" },
+        { "$ref": "#/$defs/selectSettingField" },
+        { "$ref": "#/$defs/fileSettingField" },
+        { "$ref": "#/$defs/folderSettingField" }
+      ]
+    },
+    "settingFieldBase": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/namespacedId" },
+        "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 300 }
+      }
+    },
+    "textSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "text" },
+            "defaultValue": { "type": "string" },
+            "placeholder": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        }
+      ]
+    },
+    "numberSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "number" },
+            "defaultValue": { "type": "number" },
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "step": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      ]
+    },
+    "booleanSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "boolean" },
+            "defaultValue": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "selectSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type", "options"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "select" },
+            "defaultValue": { "type": "string" },
+            "options": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/settingOption" }
+            }
+          }
+        }
+      ]
+    },
+    "fileSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "file" },
+            "defaultValue": { "type": "string", "pattern": "^(?![\\\\/])(?:[A-Za-z0-9._-]+[\\\\/])*[A-Za-z0-9._-]+$" },
+            "extensions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^\\.[A-Za-z0-9][A-Za-z0-9._-]*$" }
+            }
+          }
+        }
+      ]
+    },
+    "folderSettingField": {
+      "allOf": [
+        { "$ref": "#/$defs/settingFieldBase" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "type"],
+          "properties": {
+            "id": { "$ref": "#/$defs/namespacedId" },
+            "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+            "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+            "type": { "const": "folder" },
+            "defaultValue": { "type": "string", "pattern": "^(?![\\\\/])(?:[A-Za-z0-9._-]+[\\\\/])*[A-Za-z0-9._-]+$" }
+          }
+        }
+      ]
+    },
+    "settingOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "value"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "value": { "type": "string", "minLength": 1, "maxLength": 160 }
+      }
+    },
+    "statusBar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text"],
+      "properties": {
+        "id": { "$ref": "#/$defs/namespacedId" },
+        "text": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "tooltip": { "type": "string", "minLength": 1, "maxLength": 300 }
+      }
+    }
+  }
+}

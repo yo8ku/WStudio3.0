@@ -1,0 +1,48 @@
+{
+  "$schema": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "id": "com.wstudio.web-viewer",
+  "name": "网页浏览器",
+  "version": "1.0.0",
+  "description": "在 WStudio 工作台中打开和浏览外部网页链接。",
+  "author": { "name": "WStudio" },
+  "license": "MIT",
+  "minAppVersion": "0.1.0",
+  "apiVersion": "1.0",
+  "main": "main.js",
+  "activationEvents": ["onStartupFinished"],
+  "permissions": [
+    { "id": "webViewer.navigate", "reason": "在工作台中打开用户访问的外部网页链接。" },
+    { "id": "window.manage", "reason": "将当前网页打开到独立的工作台窗口。" },
+    { "id": "external.open", "reason": "将当前网页交给系统默认浏览器打开。" },
+    { "id": "dialogs.show", "reason": "选择网页链接的保存位置。" },
+    { "id": "workspace.write", "reason": "将网页链接保存到当前仓库。", "scope": ["*.url", "**/*.url"] },
+    { "id": "storage.plugin", "reason": "持久保存收藏的网页链接。" }
+  ],
+  "contributes": {
+    "commands": [
+      { "id": "com.wstudio.web-viewer.open", "title": "打开网页浏览器" },
+      { "id": "com.wstudio.web-viewer.new-tab", "title": "新建网页标签" }
+    ],
+    "views": [
+      { "type": "com.wstudio.web-viewer.browser", "title": "网页浏览器", "region": "editor", "multiple": true, "capabilities": ["webViewer"] }
+    ],
+    "settings": [
+      {
+        "id": "com.wstudio.web-viewer.settings",
+        "title": "网页浏览器",
+        "fields": [
+          { "id": "com.wstudio.web-viewer.home", "label": "默认主页", "type": "text", "defaultValue": "https://www.baidu.com/" },
+          { "id": "com.wstudio.web-viewer.search", "label": "搜索引擎", "type": "select", "defaultValue": "bing", "options": [
+            { "label": "DuckDuckGo", "value": "duckduckgo" },
+            { "label": "Google", "value": "google" },
+            { "label": "百度", "value": "baidu" },
+            { "label": "Bing", "value": "bing" },
+            { "label": "自定义", "value": "custom" }
+          ] },
+          { "id": "com.wstudio.web-viewer.custom-search", "label": "自定义搜索地址", "description": "使用 {query} 作为搜索词占位符。", "type": "text", "defaultValue": "" }
+        ]
+      }
+    ],
+    "statusBar": []
+  }
+}

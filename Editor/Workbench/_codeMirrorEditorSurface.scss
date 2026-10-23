@@ -1,0 +1,149 @@
+/**
+ * 文件说明：承载 CodeMirror 工作台的上下文菜单和纯代码 token 表面样式。
+ */
+@use '@/assets/styles/variables' as *;
+
+@mixin styles {
+  :global(.code-mirror-editor__context-menu-overlay) {
+    width: $editor-context-menu-min-width;
+    overflow: hidden;
+    user-select: none;
+    transition: none !important;
+    animation: none !important;
+    border: $editor-table-border-width solid var(--ws-menu-border) !important;
+    background: var(--ws-menu-background) !important;
+    color: var(--ws-foreground) !important;
+    border-radius: $radius-xs;
+    box-shadow: 0 $spacing-2xs $spacing-sm rgb(0 0 0 / 0.18);
+    padding-block: $menu-compact-spacing;
+    padding-inline: $spacing-xs;
+  }
+
+  :global(.code-mirror-editor__context-menu-overlay),
+  :global(.code-mirror-editor__context-menu-overlay *),
+  :global(.code-mirror-editor__context-menu-overlay::before),
+  :global(.code-mirror-editor__context-menu-overlay::after) {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  :global(.code-mirror-editor__image-context-menu-overlay) {
+    width: max-content;
+    min-width: $editor-context-menu-min-width;
+  }
+
+  :global(.code-mirror-editor__color-picker-overlay) {
+    width: max-content;
+    overflow: visible;
+  }
+
+  :global(.code-mirror-editor__context-menu) {
+    background: transparent !important;
+    color: inherit !important;
+  }
+
+  :global(.code-mirror-editor__context-menu-list) {
+    padding: $editor-context-menu-padding-y 0;
+    background: transparent !important;
+    color: inherit !important;
+  }
+
+  :global(.code-mirror-editor__context-menu-item) {
+    min-height: $editor-context-menu-item-height;
+    padding: 0 $spacing-sm !important;
+    color: var(--ws-foreground) !important;
+    margin-top: 2px !important;
+  }
+
+  :global(.code-mirror-editor__context-menu-item .v-list-item__content) {
+    min-width: 0;
+    color: inherit !important;
+  }
+
+  :global(.code-mirror-editor__context-menu-item .v-list-item-title) {
+    color: inherit;
+    font-size: $font-editor-context-menu-font-size !important;
+    line-height: $editor-context-menu-item-height !important;
+    letter-spacing: 0;
+  }
+
+  :global(.code-mirror-editor__context-menu-item.code-mirror-editor__image-delete),
+  :global(.code-mirror-editor__context-menu-item.code-mirror-editor__row-delete) {
+    color: $error-color !important;
+  }
+
+  .code-mirror-editor__image-size-field {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: $font-size-sm;
+  }
+
+  .code-mirror-editor__image-size-input :deep(input[type='number']) {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .code-mirror-editor__image-size-input :deep(input::-webkit-inner-spin-button),
+  .code-mirror-editor__image-size-input :deep(input::-webkit-outer-spin-button) {
+    appearance: none;
+    margin: 0;
+  }
+
+  :global(.code-mirror-editor__context-menu-arrow) {
+    width: $editor-context-menu-arrow-size;
+    height: $editor-context-menu-arrow-size;
+    color: inherit;
+  }
+
+  :global(.code-mirror-editor__context-menu-check) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $font-size-md;
+    height: $font-size-md;
+    margin-inline-end: $spacing-xs;
+    color: inherit;
+  }
+
+  :global(.code-mirror-editor__context-menu-check svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.code-mirror-editor__context-menu-arrow svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.code-mirror-editor__context-menu-item .v-list-item__overlay) {
+    display: none;
+  }
+
+  :global(.code-mirror-editor__context-menu-item:hover),
+  :global(.code-mirror-editor__context-menu-item:focus-visible),
+  :global(.code-mirror-editor__context-menu-item.v-list-item--active) {
+    background: var(--ws-menu-hoverBackground) !important;
+  }
+
+  :global(.code-mirror-editor__context-menu-item.v-list-item--disabled) {
+    opacity: 0.45;
+  }
+
+  :global(.code-mirror-editor__context-menu-divider) {
+    margin: $spacing-2xs 0;
+    border-color: var(--ws-border) !important;
+    opacity: 1;
+  }
+
+  .code-mirror-editor--json :deep(.cm-editor-code-token--property) {
+    color: var(--ws-editor-codeBlock-propertyForeground) !important;
+  }
+
+  .code-mirror-editor--json :deep(.cm-editor-code-token--invalid) {
+    color: var(--ws-editor-codeBlock-invalidForeground) !important;
+  }
+}

@@ -1,0 +1,38 @@
+// 文件说明：定义 CodeMirror 笔记属性块根容器的布局样式
+@use '@/assets/styles/variables' as *;
+@use '../Block/editorBlock' as editor-block;
+
+@mixin styles {
+  :deep(.cm-editor-note-properties-block) {
+    @include editor-block.root(
+      $display: block,
+      $max-width: null,
+      $vertical-align: null,
+      $cursor: default,
+      $border-radius: null
+    );
+    z-index: $editor-block-overlay-z-index;
+    width: calc(100% + var(--workbench-editor-gutter-width));
+    margin-inline-start: calc(-1 * var(--workbench-editor-gutter-width));
+    background: transparent;
+    pointer-events: none;
+  }
+
+  :deep(.cm-foldGutter) {
+    overflow: visible;
+  }
+
+  :deep(.cm-fold-marker--note-properties) {
+    margin-block-start: $note-properties-padding-block;
+    opacity: 0;
+    transform: translateX(calc(
+      #{$note-properties-fold-control-offset}
+      - var(--workbench-editor-line-number-gutter-width)
+    ));
+  }
+
+  :deep(.cm-editor:has(.note-properties-panel__header:hover) .cm-fold-marker--note-properties),
+  :deep(.cm-fold-marker--note-properties:hover) {
+    opacity: 1;
+  }
+}

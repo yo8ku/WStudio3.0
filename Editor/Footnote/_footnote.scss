@@ -1,0 +1,129 @@
+/**
+ * 文件说明：定义脚注补全列表的独立面板、选项和滚动区域样式。
+ */
+@use '@/assets/styles/variables' as variables;
+
+:deep(.cm-editor-footnote-reference) {
+  position: relative;
+  top: variables.$editor-footnote-reference-offset-y;
+  padding: 0 variables.$editor-footnote-reference-padding-x;
+  border-radius: variables.$editor-footnote-reference-radius;
+  color: var(--ws-editor-footnoteForeground);
+  background: var(--ws-editor-footnoteReferenceBackground);
+  font-size: variables.$editor-footnote-reference-font-size;
+  line-height: variables.$editor-footnote-reference-line-height;
+  vertical-align: super;
+  cursor: pointer;
+}
+
+:global(.cm-editor-footnote-reference-hover-tooltip) {
+  max-width: variables.$editor-footnote-reference-panel-max-width;
+  padding: variables.$tooltip-padding-y variables.$tooltip-padding-x;
+  border: variables.$editor-block-border-width solid var(--ws-border);
+  border-radius: variables.$radius-xs;
+  color: var(--ws-foreground);
+  background: var(--ws-menu-background);
+  line-height: variables.$tooltip-line-height;
+  overflow-wrap: anywhere;
+}
+
+:global(.cm-tooltip-autocomplete.cm-editor-footnote-completion) {
+  min-width: variables.$editor-footnote-panel-min-width;
+  max-width: variables.$editor-footnote-panel-max-width;
+  padding: variables.$spacing-2xs;
+  overflow: hidden;
+  border: variables.$editor-block-border-width solid var(--ws-border);
+  border-radius: variables.$radius-xs;
+  background: var(--ws-menu-background);
+}
+
+:global(.cm-editor-footnote-completion .cm-completionList) {
+  max-height: calc(
+    variables.$editor-footnote-option-height * variables.$editor-footnote-visible-options
+  );
+  overflow-y: auto;
+}
+
+:global(.cm-editor-footnote-completion ul[role='listbox'] > li[role='option']) {
+  min-height: variables.$editor-footnote-option-height;
+  padding: 0 variables.$spacing-xs;
+  border-radius: variables.$radius-2px;
+  color: var(--ws-foreground);
+  line-height: variables.$editor-footnote-option-height;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:global(.cm-editor-footnote-completion ul[role='listbox'] > li[role='option']:hover),
+:global(.cm-editor-footnote-completion ul[role='listbox'] > li[role='option'][aria-selected='true']) {
+  color: var(--ws-editor-footnotePanelHoverForeground) !important;
+  background: var(--ws-editor-footnotePanelHoverBackground) !important;
+}
+
+:deep(.cm-editor-footnote-enter-icon) {
+  display: inline-block;
+  width: variables.$editor-footnote-enter-icon-size;
+  height: variables.$editor-footnote-enter-icon-size;
+  margin-left: variables.$editor-footnote-enter-icon-gap;
+  color: var(--ws-editor-footnoteForeground);
+  opacity: variables.$editor-footnote-enter-icon-opacity;
+  border-bottom: variables.$editor-footnote-enter-icon-underline-width solid transparent;
+  vertical-align: variables.$editor-footnote-enter-icon-align;
+  cursor: pointer;
+  transition:
+    filter variables.$editor-footnote-enter-icon-hover-duration ease,
+    opacity variables.$editor-footnote-enter-icon-hover-duration ease;
+}
+
+:deep(.cm-editor-footnote-enter-icon--multiple) {
+  border-bottom-color: currentColor;
+}
+
+:deep(.cm-editor-footnote-enter-icon:hover) {
+  filter: brightness(variables.$editor-footnote-enter-icon-hover-brightness);
+  opacity: variables.$editor-footnote-enter-icon-hover-opacity;
+}
+
+:deep(.cm-editor-footnote-enter-icon svg) {
+  display: block;
+  width: variables.$editor-footnote-enter-icon-size;
+  height: variables.$editor-footnote-enter-icon-size;
+}
+
+:global(.cm-editor-footnote-references-tooltip) {
+  min-width: variables.$editor-footnote-reference-panel-min-width;
+  max-width: variables.$editor-footnote-reference-panel-max-width;
+  padding: variables.$spacing-2xs;
+  overflow: hidden;
+  border: variables.$editor-block-border-width solid var(--ws-border);
+  border-radius: variables.$radius-xs;
+  color: var(--ws-foreground);
+  background: var(--ws-menu-background);
+}
+
+:global(.cm-editor-footnote-references-list) {
+  max-height: calc(
+    variables.$editor-footnote-reference-item-height
+    * variables.$editor-footnote-reference-visible-items
+  );
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+:global(.cm-editor-footnote-reference-item) {
+  min-height: variables.$editor-footnote-reference-item-height;
+  padding: 0 variables.$spacing-xs;
+  line-height: variables.$editor-footnote-reference-item-height;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+:global(.cm-editor-footnote-reference-item:hover) {
+  color: var(--ws-editor-footnotePanelHoverForeground);
+  background: var(--ws-editor-footnotePanelHoverBackground);
+}

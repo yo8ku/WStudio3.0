@@ -1,0 +1,411 @@
+/** Styles for the inline chat editor widget. */
+@use '@/assets/styles/variables' as variables;
+@use '@editor/Block/editorBlock' as editor-block;
+
+@mixin styles {
+  :global(.cm-editor-inline-chat) {
+    @include editor-block.root($display: block,
+      $max-width: null,
+      $vertical-align: null,
+      $cursor: text,
+      $border-radius: null);
+    position: relative;
+    // Keep the inline reference panel above sibling editor blocks.
+    z-index: variables.$dropdown-menu-active-z-index;
+    width: 100%;
+    padding: 0;
+    color: var(--ws-inlineEditor-foreground, var(--ws-editor-foreground, var(--ws-foreground)));
+    font-family: variables.$font-family-base;
+  }
+
+  :global(.cm-editor-inline-chat[hidden]) {
+    display: none;
+  }
+
+  :global(.cm-editor-inline-chat.cm-editor-block) {
+    pointer-events: none;
+  }
+
+  :global(.cm-editor-inline-chat-response) {
+    @include editor-block.root($display: block,
+      $max-width: null,
+      $vertical-align: null,
+      $cursor: text,
+      $border-radius: null);
+    position: relative;
+    // Keep the response below the input block so its model menu remains clickable.
+    z-index: variables.$dropdown-menu-active-z-index - 1;
+    width: 100%;
+    padding: 0;
+    color: var(--ws-inlineEditor-foreground, var(--ws-editor-foreground, var(--ws-foreground)));
+    font-family: variables.$font-family-base;
+  }
+
+  :global(.cm-editor-inline-chat-response.cm-editor-block) {
+    pointer-events: none;
+  }
+
+  :global(.cm-editor-inline-chat-response[hidden]) {
+    display: none;
+  }
+
+  :global(.ai-zone-border-top),
+  :global(.ai-zone-border-bottom) {
+    width: calc(100% + var(--workbench-editor-gutter-width));
+    height: variables.$editor-block-border-width;
+    margin-inline-start: calc(-1 * var(--workbench-editor-gutter-width));
+    background: var(--ws-inlineEditor-zoneTopBackground, var(--ws-border));
+    pointer-events: none;
+  }
+
+  :global(.ai-zone-border-bottom) {
+    background: var(--ws-inlineEditor-zoneBottomBackground, var(--ws-border));
+  }
+
+  :global(.cm-editor-inline-chat__content) {
+    display: flex;
+    flex-direction: column;
+    width: variables.$inline-chat-content-width;
+    max-width: 100%;
+    min-width: 0;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-inline-chat__content .ws-icon-button) {
+    height: 1.5rem;
+  }
+
+  :global(.cm-editor-inline-chat__mount),
+  :global(.cm-editor-inline-chat-response__mount) {
+    display: contents;
+  }
+
+  :global(.cm-editor-inline-chat__message-bar) {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    min-width: 0;
+    padding: 0.2rem 0;
+    min-height: variables.$select-trigger-height;
+    color: var(--ws-descriptionForeground, var(--ws-foreground));
+  }
+
+
+
+  :global(.cm-editor-inline-chat__message-label) {
+    flex: 0 0 auto;
+    font-size: variables.$font-size-xs;
+    white-space: nowrap;
+  }
+
+  :global(.cm-editor-inline-chat__message-value) {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--ws-inlineEditor-foreground, var(--ws-editor-foreground, var(--ws-foreground)));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.cm-editor-inline-chat__message-menu.ws-dropdown-menu) {
+    // Use the full bar as the menu anchor so the panel shares its width.
+    position: relative;
+    display: block;
+    width: 100%;
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  :global(.cm-editor-inline-chat__message-menu .ws-dropdown-menu__trigger) {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  :global(.cm-editor-inline-chat__message-menu .ws-dropdown-menu__panel) {
+    // Align the history panel directly with the message bar.
+    margin-top: 0;
+    color: var(--ws-menu-foreground, var(--ws-foreground));
+    background: var(--ws-inlineEditor-background, var(--ws-editor-background, var(--ws-input-background)));
+  }
+
+  :global(.cm-editor-inline-chat__message-history-toggle) {
+    flex: 0 0 auto;
+  }
+
+  :global(.cm-editor-inline-chat__message-history-title) {
+    padding: variables.$spacing-2xs variables.$spacing-xs;
+    color: var(--ws-descriptionForeground, var(--ws-foreground));
+    line-height: normal;
+    height: 1.75rem;
+  }
+
+  :global(.cm-editor-inline-chat__message-history-item) {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    min-width: 0;
+  }
+
+  :global(.cm-editor-inline-chat__message-history-text) {
+    flex: 1 1 auto;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.cm-editor-inline-chat__message-history-delete) {
+    flex: 0 0 auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  :global(.cm-editor-inline-chat__message-history-item:hover .cm-editor-inline-chat__message-history-delete),
+  :global(.cm-editor-inline-chat__message-history-item:focus-within .cm-editor-inline-chat__message-history-delete) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-inline-chat__body) {
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    padding: variables.$spacing-2xs 0;
+  }
+
+  :global(.cm-editor-inline-chat__editor) {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 2.25rem;
+    max-height: 8rem;
+    outline: none;
+  }
+
+  :global(.cm-editor-inline-chat__tiptap) {
+    min-height: 2.25rem;
+    max-height: 8rem;
+    overflow-y: auto;
+    outline: none;
+    color: var(--ws-inlineEditor-foreground, var(--ws-editor-foreground, var(--ws-foreground)));
+    background: var(--ws-editor-background);
+    caret-color: var(--workbench-editor-cursor, var(--ws-editor-cursor-foreground));
+    cursor: text;
+    font-size: 0.8rem;
+  }
+
+  :deep(.cm-editor-inline-chat__tiptap)::selection,
+  :deep(.cm-editor-inline-chat__tiptap *)::selection {
+    background-color: var(--workbench-editor-selection) !important;
+  }
+
+  :global(.cm-editor-inline-chat__tiptap:focus) {
+    border-color: var(--ws-focusBorder);
+  }
+
+  :global(.cm-editor-inline-chat__tiptap::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+  }
+
+  :global(.cm-editor-inline-chat__tiptap p) {
+    margin: 0;
+  }
+
+  :global(.cm-editor-inline-chat__reference) {
+    display: inline-block;
+    padding-inline: variables.$spacing-2xs;
+    border-radius: variables.$radius-xs;
+    color: var(--ws-inlineEditor-qouteForeground, var(--ws-markdown-quoteForeground));
+    background: var(--ws-inlineEditor-qouteBackground, var(--ws-markdown-quoteBackground));
+  }
+
+  :global(.cm-editor-inline-chat__tiptap blockquote) {
+    margin: 0;
+    padding: variables.$spacing-2xs variables.$spacing-xs;
+    border-inline-start: variables.$editor-quote-line-width solid var(--ws-inlineEditor-qouteForeground, var(--ws-markdown-quoteForeground, var(--ws-editor-foreground)));
+    color: var(--ws-inlineEditor-qouteForeground, var(--ws-markdown-quoteForeground, var(--ws-editor-foreground)));
+    background: var(--ws-inlineEditor-qouteBackground, var(--ws-markdown-quoteBackground, var(--ws-editor-background)));
+  }
+
+  :global(.cm-editor-inline-chat__send),
+  :global(.cm-editor-inline-chat__close),
+  :global(.cm-editor-inline-chat__tool) {
+    flex: 0 0 auto;
+  }
+
+  :global(.ws-icon-button.cm-editor-inline-chat__send--streaming),
+  :global(.ws-icon-button.cm-editor-inline-chat__send--streaming:hover),
+  :global(.ws-icon-button.cm-editor-inline-chat__send--streaming:active) {
+    color: #ff5b5b;
+  }
+
+  :global(.cm-editor-inline-chat__toolbar) {
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    min-height: 1.5rem;
+    padding-bottom: variables.$spacing-2xs;
+  }
+
+  :global(.cm-editor-inline-chat__new-chat) {
+    flex: 0 0 auto;
+  }
+
+  :global(.cm-editor-inline-chat__response-group) {
+    display: flex;
+    width: variables.$inline-chat-content-width;
+    max-width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    pointer-events: auto;
+    // background: var(--ws-diff-background, var(--ws-inlineEditor-background, var(--ws-editor-background, var(--ws-input-background))));
+  }
+
+  :global(.cm-editor-inline-chat__response-toolbar) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: variables.$spacing-2xs;
+    min-height: variables.$select-trigger-height;
+    padding: variables.$spacing-2xs 0 variables.$spacing-xs;
+    color: var(--ws-diff-foreground, #a3a3a3);
+    box-sizing: border-box;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-inline-chat__response) {
+    position: relative;
+    max-width: 100%;
+    min-width: 0;
+    color: var(--ws-diff-foreground, #a3a3a3);
+
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-inline-chat__response-scroll) {
+    max-height: min(28rem, 50vh);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: variables.$spacing-sm variables.$spacing-xs;
+    font-size: variables.$font-size-sm;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+
+  :global(.cm-editor-inline-chat__response-scroll::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  :global(.cm-editor-inline-chat__response-action) {
+    flex: 0 0 auto;
+  }
+
+  :global(.cm-editor-inline-chat__response-action.ws-icon-button--with-text) {
+    width: auto;
+    min-width: 0;
+    padding-inline: variables.$spacing-xs;
+  }
+
+  :global(.cm-editor-inline-chat__accepted-line) {
+    background: var(--ws-editor-diffBackground) !important;
+    color: var(--ws-editor-diffForeground, var(--ws-editor-foreground));
+  }
+
+  :global(.cm-editor-inline-chat__response article > :first-child) {
+    margin-top: 0;
+  }
+
+  :global(.cm-editor-inline-chat__response article > :last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.cm-editor-inline-chat__response h1),
+  :global(.cm-editor-inline-chat__response h2),
+  :global(.cm-editor-inline-chat__response h3),
+  :global(.cm-editor-inline-chat__response h4),
+  :global(.cm-editor-inline-chat__response h5),
+  :global(.cm-editor-inline-chat__response h6) {
+    margin: variables.$spacing-sm 0 variables.$spacing-2xs;
+    line-height: 1.3;
+  }
+
+  :global(.cm-editor-inline-chat__response p),
+  :global(.cm-editor-inline-chat__response ul),
+  :global(.cm-editor-inline-chat__response ol),
+  :global(.cm-editor-inline-chat__response blockquote),
+  :global(.cm-editor-inline-chat__response pre),
+  :global(.cm-editor-inline-chat__response table) {
+    margin: variables.$spacing-2xs 0;
+  }
+
+  :global(.cm-editor-inline-chat__response ul),
+  :global(.cm-editor-inline-chat__response ol) {
+    padding-inline-start: variables.$spacing-md;
+  }
+
+  :global(.cm-editor-inline-chat__response blockquote) {
+    padding-inline-start: variables.$spacing-xs;
+    border-inline-start: variables.$editor-quote-line-width solid var(--ws-border);
+    color: var(--ws-descriptionForeground, var(--ws-foreground));
+  }
+
+  :global(.cm-editor-inline-chat__response pre) {
+    overflow-x: auto;
+    padding: variables.$spacing-xs;
+    background: var(--ws-editor-overlayBackground, var(--ws-editor-background));
+  }
+
+  :global(.cm-editor-inline-chat__response code) {
+    font-family: variables.$font-family-base;
+  }
+
+  :global(.cm-editor-inline-chat__response table) {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  :global(.cm-editor-inline-chat__response th),
+  :global(.cm-editor-inline-chat__response td) {
+    padding: variables.$spacing-2xs variables.$spacing-xs;
+    border: variables.$editor-table-border-width solid var(--ws-border);
+    text-align: start;
+  }
+
+  :global(.cm-editor-inline-chat__response a) {
+    color: var(--ws-link-linkForeground);
+  }
+
+  :global(.cm-editor-inline-chat__response-status),
+  :global(.cm-editor-inline-chat__response-error) {
+    margin: 0;
+    color: var(--ws-descriptionForeground, var(--ws-foreground));
+  }
+
+  :global(.cm-editor-inline-chat__response-error) {
+    color: var(--ws-errorForeground, var(--ws-foreground));
+  }
+
+  :global(.cm-editor-inline-chat__model) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+    width: variables.$inline-chat-model-max-width;
+    flex: 0 1 variables.$inline-chat-model-max-width;
+    max-width: variables.$inline-chat-model-max-width;
+    margin-inline-start: auto;
+  }
+
+  :global(.cm-editor-inline-chat__model .ws-dropdown-menu) {
+    min-width: 0;
+  }
+
+}

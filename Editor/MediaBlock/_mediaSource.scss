@@ -1,0 +1,19 @@
+// 文件说明：统一音频块与视频块源码链接的 CodeMirror 语法覆盖样式。
+@mixin source-link($block-class) {
+  :deep(.#{$block-class}-source),
+  :deep(.#{$block-class}-source *) {
+    color: var(--ws-foreground) !important;
+    text-decoration-line: none !important;
+  }
+
+  :deep(.#{$block-class}-source-url),
+  :deep(.#{$block-class}-source-url *) {
+    color: var(--ws-markdown-VideoForeground) !important;
+    text-decoration-line: underline !important;
+  }
+
+  :deep(.#{$block-class}-source-url:hover),
+  :deep(.#{$block-class}-source-url:hover *) {
+    color: var(--ws-markdown-VideoHoverForeground) !important;
+  }
+}

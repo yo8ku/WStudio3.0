@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"Permissions for trusted WStudio renderers; remote WebViewer children have no capabilities","local":true,"webviews":["main","search","repository-manager","wstudio-*","plugin-window-*"],"permissions":["core:default","core:window:allow-start-dragging","dialog:default","notification:default"]}}

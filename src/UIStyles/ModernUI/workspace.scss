@@ -1,0 +1,80 @@
+// 文件说明：定义 Modern UI 风格下停靠工作区的面板、分隔和滚动条外观。
+@use '@/assets/styles/variables' as *;
+
+@mixin apply {
+  .docking-three-workspace--modern {
+    --docking-workspace-panel-gap: #{$spacing-04rem};
+    --docking-workspace-panel-radius: #{$radius-5rem};
+    --docking-workspace-panel-border-width: #{$editor-table-border-width};
+    box-sizing: border-box;
+    padding: 0.3rem  0  0;
+  }
+
+
+  .docking-three-workspace--modern :deep(.docking-three-split__handle::before) {
+    border-radius: $radius-xs;
+  }
+
+  .docking-three-workspace--modern
+    > :deep(.docking-three-split--horizontal > .docking-three-split__handle + .docking-three-split__item) {
+    margin-inline-start: var(--docking-workspace-panel-gap);
+  }
+
+  .docking-three-workspace--modern
+    > :deep(.docking-three-split--horizontal > .docking-three-split__handle::before) {
+    opacity: 0;
+  }
+
+  .docking-three-workspace--modern
+    > :deep(.docking-three-split--horizontal > .docking-three-split__handle:hover::before),
+  .docking-three-workspace--modern
+    > :deep(.docking-three-split--horizontal > .docking-three-split__handle--active::before) {
+    opacity: 1;
+  }
+
+  .docking-three-workspace--modern :deep(.scrollbar-vertical__thumb) {
+    border-radius: $radius-xs;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__header) {
+    align-items: center;
+    min-height: 40px;
+    max-height: 40px;
+    box-sizing: border-box;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tabs) {
+    align-items: center;
+    gap: $spacing-2xs;
+    padding-inline: $spacing-2xs;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tabs-scrollbar) {
+    right: $spacing-2xs;
+    left: $spacing-2xs;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tabs-scrollbar .scrollbar-horizontal__thumb) {
+    border-radius: $radius-xs;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tab) {
+    height: 30px;
+    min-height: 30px;
+    margin-block: 0;
+    padding-inline: $spacing-xs;
+    border-right: 0;
+    border-radius: $radius-xs;
+    box-sizing: border-box;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tab--active) {
+    border: $editor-table-border-width solid var(--ws-tab-border, var(--ws-border, transparent));
+    box-shadow: none;
+  }
+
+  .docking-three-workspace--modern :deep(.docking-three-group__tab--inactive) {
+    box-shadow: none;
+  }
+
+}

@@ -1,0 +1,325 @@
+/**
+ * 文件说明：定义 Wiki 文件嵌入补全面板与 Markdown 引用块的视觉表面。
+ */
+@use '@/assets/styles/variables' as variables;
+@use '@editor/Block/editorBlock' as editor-block;
+
+@mixin styles {
+  :global(.cm-tooltip-autocomplete.cm-editor-wiki-link-embed-completion) {
+    --workbench-scrollbar-hit-width: #{variables.$scrollbar-hit-width};
+    --workbench-scrollbar-thumb-width: #{variables.$scrollbar-thumb-width};
+    --workbench-scrollbar-thumb-min-height: #{variables.$scrollbar-thumb-min-height};
+    --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+    --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+    --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: min(variables.$editor-wiki-link-panel-min-width, calc(100vw - variables.$spacing-md * 2));
+    max-width: min(variables.$editor-wiki-link-panel-max-width, calc(100vw - variables.$spacing-md * 2));
+    padding: variables.$spacing-2xs;
+    overflow: hidden;
+    border: variables.$editor-block-border-width solid var(--ws-border);
+    border-radius: variables.$radius-xs;
+    color: var(--ws-foreground);
+    background: var(--ws-menu-background);
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__search) {
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    padding: variables.$spacing-2xs 0 variables.$spacing-xs;
+    order: 1;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion > ul[role='listbox']) {
+    order: 2;
+    width: 100%;
+    max-height: calc(
+      variables.$editor-wiki-link-option-height * variables.$editor-wiki-link-visible-options
+    );
+    padding-right: calc(
+      var(--workbench-scrollbar-hit-width) +
+      var(--workbench-scrollbar-thumb-width)
+    );
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion > ul[role='listbox']::-webkit-scrollbar) {
+    display: none !important;
+    width: 0;
+    height: 0;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__description) {
+    order: 3;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__scrollbar) {
+    position: absolute;
+    top: calc(2.75rem + #{variables.$spacing-2xs});
+    right: variables.$spacing-2xs;
+    bottom: variables.$spacing-2xs;
+    z-index: 3;
+    width: var(--workbench-scrollbar-hit-width);
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__scrollbar .scrollbar-vertical) {
+    display: block !important;
+    pointer-events: auto;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__search-icon) {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+    font-family: 'Untitled';
+    font-size: 1em;
+    line-height: 1;
+    color: currentColor;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__search-icon::before) {
+    content: '\f0a4';
+    opacity: 0.72;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__search-input) {
+    min-width: 0;
+    flex: 1 1 auto;
+    border: 0;
+    outline: 0;
+    color: inherit;
+    background: transparent;
+    line-height: inherit;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion .cm-completionList) {
+    max-height: calc(
+      variables.$editor-wiki-link-option-height * variables.$editor-wiki-link-visible-options
+    );
+    overflow-y: auto;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion ul[role='listbox'] > li[role='option']) {
+    display: flex;
+    min-height: variables.$editor-wiki-link-option-height;
+    align-items: center;
+    padding: 0 variables.$spacing-xs;
+    border-radius: variables.$radius-2px;
+    color: var(--ws-foreground);
+    line-height: variables.$editor-wiki-link-option-height;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion ul[role='listbox'] > li[role='option']:hover),
+  :global(.cm-editor-wiki-link-embed-completion ul[role='listbox'] > li[role='option'][aria-selected='true']) {
+    color: var(--ws-menu-hoverForeground) !important;
+    background: var(--ws-menu-hoverBackground) !important;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion .cm-completionDetail) {
+    margin-left: auto;
+    padding-left: variables.$spacing-xs;
+    color: var(--ws-descriptionForeground);
+    font-size: variables.$font-size-xs;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.cm-editor-wiki-link-embed-completion__description) {
+    display: block;
+    padding: variables.$spacing-xs variables.$spacing-2xs 0;
+    border-top: variables.$editor-block-border-width solid var(--ws-border);
+    color: var(--ws-descriptionForeground);
+    font-size: variables.$font-size-xs;
+    line-height: 1.4;
+  }
+
+  :global(.cm-editor-wiki-link-embed) {
+    @include editor-block.root($max-width: 100%, $border-radius: null);
+    --workbench-scrollbar-hit-width: #{variables.$scrollbar-hit-width};
+    --workbench-scrollbar-thumb-width: #{variables.$scrollbar-thumb-width};
+    --workbench-scrollbar-thumb-min-height: #{variables.$scrollbar-thumb-min-height};
+    --workbench-scrollbar-thumb: var(--ws-editor-scrollbarSlider-background);
+    --workbench-scrollbar-thumb-hover: var(--ws-editor-scrollbarSlider-hoverBackground);
+    --workbench-scrollbar-thumb-active: var(--ws-editor-scrollbarSlider-activeBackground);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: variables.$editor-wiki-link-embed-min-height;
+    max-height: variables.$editor-wiki-link-embed-max-height;
+    padding: 0.2rem variables.$spacing-sm 0.2rem variables.$spacing-md;
+    color: var(--ws-editor-foreground);
+    background: var(--ws-editor-overlayBackground);
+    background-clip: padding-box;
+    overflow: hidden;
+  }
+
+  :global(.cm-editor-wiki-link-embed__header .ws-icon-button ){
+      height: variables.$button-height;
+  }
+
+  :global(.cm-editor-wiki-link-embed::before) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: variables.$editor-quote-line-width;
+    background: var(--ws-markdown-quoteForeground);
+    content: '';
+    pointer-events: none;
+  }
+
+  :global(.cm-editor-wiki-link-embed__header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: variables.$spacing-xs;
+    padding: 0 0 0.3rem;
+
+  }
+
+  :global(.cm-editor-wiki-link-embed__actions) {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: variables.$spacing-xs;
+  }
+
+  :global(.cm-editor-wiki-link-embed__title) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  :global(.cm-editor-wiki-link-embed__source-toggle),
+  :global(.cm-editor-wiki-link-embed__open-tab) {
+    display: inline-flex;
+    width: variables.$editor-block-action-size;
+    min-width: variables.$editor-block-action-size;
+    height: variables.$editor-block-action-size;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    opacity: 0.72;
+  }
+
+  :global(.cm-editor-wiki-link-embed__source-toggle:hover),
+  :global(.cm-editor-wiki-link-embed__source-toggle:focus-visible),
+  :global(.cm-editor-wiki-link-embed__open-tab:hover),
+  :global(.cm-editor-wiki-link-embed__open-tab:focus-visible) {
+    color: var(--ws-menu-hoverForeground);
+    opacity: 1;
+  }
+
+  :global(.cm-editor-wiki-link-embed__source-icon),
+  :global(.cm-editor-wiki-link-embed__source-icon svg),
+  :global(.cm-editor-wiki-link-embed__open-tab-icon),
+  :global(.cm-editor-wiki-link-embed__open-tab-icon svg) {
+    display: block;
+    width: variables.$editor-block-action-icon-size;
+    height: variables.$editor-block-action-icon-size;
+  }
+
+  :global(.cm-editor-wiki-link-embed__scroller) {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    padding-right: variables.$spacing-xs;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+
+  :global(.cm-editor-wiki-link-embed__resize-handle) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: variables.$spacing-sm;
+    min-height: variables.$spacing-sm;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 variables.$spacing-sm;
+    cursor: ns-resize;
+    touch-action: none;
+    outline: none;
+  }
+
+  :global(.cm-editor-wiki-link-embed__resize-handle::after) {
+    width: 2.25rem;
+    height: 2px;
+    border-radius: variables.$radius-2px;
+    background: var(--ws-border);
+    content: '';
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+
+  :global(.cm-editor-wiki-link-embed:hover .cm-editor-wiki-link-embed__resize-handle::after),
+  :global(.cm-editor-wiki-link-embed--resizing .cm-editor-wiki-link-embed__resize-handle::after),
+  :global(.cm-editor-wiki-link-embed__resize-handle:focus-visible::after) {
+    opacity: 1;
+  }
+
+  :global(.cm-editor-wiki-link-embed__scroller::-webkit-scrollbar) {
+    display: none;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content) {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content > .cm-editor) {
+    height: auto;
+    min-height: 0;
+    color: inherit;
+    background: transparent;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content > .cm-editor .cm-scroller) {
+    overflow: visible;
+    font-family: inherit;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content > .cm-editor .cm-content) {
+    min-height: 0;
+    padding: 0;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content > :first-child) {
+    margin-top: 0;
+  }
+
+  :global(.cm-editor-wiki-link-embed__content > :last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.cm-editor-wiki-link-embed__scrollbar) {
+    position: absolute;
+    top: variables.$editor-header-action-height + variables.$spacing-sm;
+    right: variables.$spacing-2xs;
+    bottom: variables.$spacing-sm;
+    width: var(--workbench-scrollbar-hit-width);
+    pointer-events: auto;
+  }
+}

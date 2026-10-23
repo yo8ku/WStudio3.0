@@ -1,0 +1,35 @@
+/* 文件说明：定义插件 Shadow DOM 内部挂载根节点的基础布局与滚动行为。 */
+@use './noTextSelection';
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--ws-editor-foreground);
+}
+
+.plugin-view-panel__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.plugin-view-panel__content,
+.plugin-view-panel__content *,
+.plugin-view-panel__content *::before,
+.plugin-view-panel__content *::after {
+  box-sizing: border-box;
+}
+
+.plugin-view-panel__content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

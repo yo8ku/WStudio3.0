@@ -1,0 +1,71 @@
+// 文件说明：定义 Vuetify 菜单的统一基础视觉规则，供工作台及插件菜单复用。
+@use './variables' as *;
+
+.ws-menu {
+  overflow: hidden;
+  user-select: none;
+  transition: none !important;
+  animation: none !important;
+  border: $editor-table-border-width solid var(--ws-menu-border);
+  border-radius: $radius-xs;
+  background: $menu-surface-background !important;
+  color: var(--ws-foreground);
+  box-shadow: $menu-box-shadow;
+  padding: $editor-context-menu-padding-y;
+  font-family: $font-family-base;
+}
+
+.ws-menu,
+.ws-menu *,
+.ws-menu::before,
+.ws-menu::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+.ws-menu .v-list {
+  padding-block: 0;
+  background: $menu-content-background !important;
+  color: inherit;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+.ws-menu .v-list-item {
+  min-height: $editor-context-menu-item-height !important;
+  padding-block: 0;
+  color: var(--ws-foreground);
+  text-align: left;
+  gap: 5px;
+  border-radius: $radius-xs !important;
+}
+
+.ws-menu .v-list-item__content,
+.ws-menu .v-list-item-title {
+  text-align: left;
+}
+
+.ws-menu .v-list-item-title {
+  overflow: hidden;
+  color: var(--ws-foreground);
+  font-size: $font-editor-context-menu-font-size;
+  line-height: $editor-context-menu-item-height;
+  letter-spacing: 1px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ws-menu .v-list-item:hover,
+.ws-menu .v-list-item:focus-visible:not(.v-list-item--active) {
+  background: var(--ws-menu-hoverBackground) !important;
+}
+
+.ws-menu .v-list-item__overlay {
+  display: none;
+}
+
+.ws-menu .v-divider {
+  margin-block: $spacing-2xs;
+  border-color: var(--ws-border);
+  opacity: 1;
+}

@@ -1,0 +1,207 @@
+@use '@/assets/styles/variables' as *;
+
+@mixin styles {
+  .code-mirror-editor :deep(.cm-panels-top) {
+    position: absolute;
+    inset: $spacing-md $spacing-sm auto auto;
+    z-index: 20;
+    width: auto;
+    max-width: calc(100% - #{$spacing-sm * 2});
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    right: 20px;
+    top: 10px !important;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    min-width: min(25rem, calc(100vw - #{$spacing-sm * 2}));
+    padding-block: $spacing-2xs;
+    border-radius: $radius-xs;
+    background: var(--ws-dialog-background);
+    color: var(--ws-foreground);
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 22%);
+    overflow: hidden;
+    pointer-events: auto;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel:focus-within) {
+    border-color: var(--workbench-editor-border);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__toolbar),
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-row) {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 1.5rem;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__toolbar) {
+    padding-inline-start: $spacing-xs;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__resize-handle) {
+    position: absolute;
+    inset-block: -$spacing-2xs;
+    inset-inline-start: 0;
+    z-index: 1;
+    width: $docking-splitter-hit-size;
+    overflow: visible;
+    cursor: e-resize;
+    touch-action: none;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__resize-handle::before) {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: $docking-splitter-active-size;
+    background: var(--ws-border);
+    content: '';
+    transition:
+      width $docking-splitter-hover-duration ease,
+      background $docking-splitter-hover-duration ease;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__resize-handle:hover::before) {
+    width: $docking-splitter-active-size;
+    background: var(--ws-sash-hoverBorder);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__resize-handle--active::before) {
+    width: $docking-splitter-active-size;
+    background: var(--ws-sash-activeBorder);
+    transition-delay: 0s;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-row) {
+    padding-inline-start: calc(1.56rem + #{$spacing-xs});
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-row .code-mirror-search-panel__button) {
+    flex: 0 0 1.5rem;
+    width: 1.5rem;
+    margin-inline: $spacing-3xs;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__field) {
+    display: flex;
+    align-items: center;
+    padding: 1px;
+    padding-left: $spacing-2xs;
+    min-width: 10rem;
+    flex: 1 1 16rem;
+    overflow: hidden;
+    border: 1px solid var(--ws-input-border, var(--ws-border, transparent));
+    border-radius: $radius-xs;
+    font-size: 13px;
+    background: var(--workbench-editor-background);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__input),
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-input) {
+    min-width: 0;
+    height: 100%;
+    flex: 1 1 auto;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ws-input-foreground);
+    font-size: 13px;
+    border: var(--ws-input-border);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-input:focus-within),
+  .code-mirror-editor :deep(.code-mirror-search-panel__field:focus-within) {
+    border: 1px solid var(--ws-input-focusBorder);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-input) {
+    flex: 0 0 auto;
+    width: 20rem;
+    border: 1px solid var(--ws-input-border);
+    border-radius: $radius-xs;
+    background: var(--ws-input-background);
+    padding: 3px;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.3rem;
+    padding: 2px;
+    border-radius: $radius-xs;
+    color: var(--ws-button-foreground);
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__actions) {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: $spacing-xs;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__actions .code-mirror-search-panel__button) {
+    margin-right: 0;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__text-button) {
+    width: auto;
+    flex-basis: auto;
+    padding-inline: $spacing-xs;
+    white-space: nowrap;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__button:hover),
+  .code-mirror-editor :deep(.code-mirror-search-panel__button:focus-visible) {
+    border-color: var(--ws-border);
+    background-color: var(--ws-button-hoverBackground);
+    outline: 0;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__mode[aria-pressed='true']) {
+    border-color: transparent;
+    background: var(--workbench-editor-background);
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__mode:hover),
+  .code-mirror-editor :deep(.code-mirror-search-panel__mode:focus-visible) {
+    border-color: transparent;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__icon) {
+    display: block;
+    width: 1.1rem;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    font-size: 1.1rem;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__count) {
+    flex: 0 0 auto;
+    min-width: 5.5rem;
+    color: var(--workbench-editor-text);
+    font-size: $font-size-xs;
+    text-align: left;
+    padding-inline: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__count--empty) {
+    color: #DC514A;
+  }
+
+
+  .code-mirror-editor :deep(.code-mirror-search-panel__replace-row[hidden]) {
+    display: none;
+  }
+}

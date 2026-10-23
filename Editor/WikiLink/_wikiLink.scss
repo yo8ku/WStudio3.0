@@ -1,0 +1,60 @@
+/**
+ * 文件说明：定义 WikiLink 标题补全的自定义候选面板样式。
+ */
+@use '@/assets/styles/variables' as variables;
+
+@mixin styles {
+  :global(.cm-tooltip-autocomplete.cm-editor-wiki-link-completion) {
+    min-width: variables.$editor-wiki-link-panel-min-width;
+    max-width: variables.$editor-wiki-link-panel-max-width;
+    padding: variables.$spacing-2xs;
+    overflow: hidden;
+    border: variables.$editor-block-border-width solid var(--ws-border);
+    border-radius: variables.$radius-xs;
+    background: var(--ws-menu-background);
+  }
+
+  :global(.cm-editor-wiki-link-completion .cm-completionList) {
+    max-height: calc(
+      variables.$editor-wiki-link-option-height * variables.$editor-wiki-link-visible-options
+    );
+    overflow-y: auto;
+  }
+
+  :global(.cm-editor-wiki-link-completion ul[role='listbox'] > li[role='option']) {
+    display: flex;
+    min-height: variables.$editor-wiki-link-option-height;
+    align-items: center;
+    padding: 0 variables.$spacing-xs;
+    border-radius: variables.$radius-2px;
+    color: var(--ws-foreground);
+    line-height: variables.$editor-wiki-link-option-height;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  :global(.cm-editor-wiki-link-completion .cm-completionLabel) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.cm-editor-wiki-link-completion .cm-completionDetail) {
+    margin-left: variables.$spacing-xs;
+    color: var(--ws-foreground);
+    opacity: variables.$editor-wiki-link-detail-opacity;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(.cm-editor-wiki-link-completion ul[role='listbox'] > li[role='option']:hover),
+  :global(.cm-editor-wiki-link-completion ul[role='listbox'] > li[role='option'][aria-selected='true']) {
+    color: var(--ws-menu-hoverForeground) !important;
+    background: var(--ws-menu-hoverBackground) !important;
+  }
+
+  :global(.cm-editor-wiki-link-completion ul[role='listbox'] > li[role='option']:hover .cm-completionDetail),
+  :global(.cm-editor-wiki-link-completion ul[role='listbox'] > li[role='option'][aria-selected='true'] .cm-completionDetail) {
+    color: inherit;
+  }
+}

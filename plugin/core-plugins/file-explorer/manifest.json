@@ -1,0 +1,115 @@
+{
+  "$schema": "https://wstudio.dev/schemas/plugin-manifest.v1.json",
+  "id": "com.wstudio.file-explorer",
+  "name": "文件列表",
+  "version": "1.0.0",
+  "description": "打开仓库并在 WStudio 左侧边栏显示文件列表。",
+  "author": {
+    "name": "WStudio"
+  },
+  "icon": "assets/file-list.svg",
+  "license": "MIT",
+  "minAppVersion": "0.1.0",
+  "apiVersion": "1.0",
+  "main": "main.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "permissions": [
+    {
+      "id": "workspace.read",
+      "reason": "读取仓库条目以显示文件树。",
+      "scope": ["**"]
+    },
+    {
+      "id": "workspace.open",
+      "reason": "允许用户通过命令选择仓库。",
+      "scope": ["**"]
+    },
+    {
+      "id": "workspace.write",
+      "reason": "允许用户在文件列表中创建新笔记。",
+      "scope": ["**"]
+    },
+    {
+      "id": "editor.write",
+      "reason": "在编辑器中打开选中的仓库文件。",
+      "scope": ["**"]
+    },
+    {
+      "id": "editor.read",
+      "reason": "读取当前编辑器文档以定位文件列表中的活动文件。",
+      "scope": ["**"]
+    },
+    {
+      "id": "window.manage",
+      "reason": "允许用户从文件列表在新工作台窗口中打开文件。"
+    },
+    {
+      "id": "clipboard.write",
+      "reason": "允许用户从文件列表复制授权工作区条目的路径。"
+    },
+    {
+      "id": "external.open",
+      "reason": "允许用户使用系统默认应用打开或在资源管理器中定位授权条目。"
+    },
+    {
+      "id": "notifications.show",
+      "reason": "提示用户加密文件无法直接在编辑器中打开。",
+      "scope": ["**"]
+    },
+    {
+      "id": "dialogs.show",
+      "reason": "允许文件列表显示仓库管理并执行新建、内联重命名和删除操作。"
+    }
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "com.wstudio.file-explorer.open",
+        "title": "打开文件列表",
+        "description": "选择仓库并显示文件列表。"
+      }
+    ],
+    "views": [
+      {
+        "type": "com.wstudio.file-explorer.files",
+        "title": "文件",
+        "region": "left-sidebar",
+        "multiple": false,
+        "openOnStartup": true
+      }
+    ],
+    "settings": [
+      {
+        "id": "com.wstudio.file-explorer.appearance",
+        "title": "文件列表",
+        "description": "控制文件列表中的统计与名称显示方式。",
+        "fields": [
+          {
+            "id": "com.wstudio.file-explorer.show-file-count",
+            "label": "文件统计",
+            "description": "显示每个目录及其子目录中的文件数量，不包含目录。",
+            "type": "boolean",
+            "defaultValue": false
+          },
+          {
+            "id": "com.wstudio.file-explorer.show-file-type",
+            "label": "文件类型",
+            "description": "在文件名称右侧显示文件后缀类型标签。",
+            "type": "boolean",
+            "defaultValue": false
+          },
+          {
+            "id": "com.wstudio.file-explorer.hide-file-extension",
+            "label": "隐藏后缀",
+            "description": "在文件列表中隐藏文件名末尾的类型后缀。",
+            "type": "boolean",
+            "defaultValue": false
+          }
+        ]
+      }
+    ],
+    "statusBar": []
+  }
+}

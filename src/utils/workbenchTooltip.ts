@@ -1,0 +1,1 @@
+export const WORKBENCH_TOOLTIP_OPEN_DELAY = 500;
