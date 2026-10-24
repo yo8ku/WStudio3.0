@@ -14,7 +14,12 @@ const SVG_SOURCE_DIRECTORY = path.resolve(__dirname, 'src/assets/svg');
 /** 读取宿主 SVG 源码，供单一虚拟模块内联输出。 */
 function readSvgSources(): Readonly<Record<string, string>> {
   const entries = fs.readdirSync(SVG_SOURCE_DIRECTORY)
-    .filter(fileName => fileName.toLowerCase().endsWith('.svg'))
+    // macOS writes AppleDouble sidecars into Parallels/shared folders. They can
+    // have an .svg suffix, but are metadata files rather than usable icons.
+    .filter(fileName => (
+      fileName.toLowerCase().endsWith('.svg')
+      && !fileName.startsWith('._')
+    ))
     .sort((left, right) => left.localeCompare(right));
 
   return Object.fromEntries(
